@@ -35,7 +35,7 @@ In addition I added some comfort functions which you can see below. If you have 
 To use the library the right way please import it with a dot in front so it acts like a local library:
 
 ```
-import . "github.com/k1ln/String/String"
+import . "String"
 ```
 
 otherwise you have to write "String." in front of all declarations which is not favorable. 
