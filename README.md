@@ -44,7 +44,7 @@ String (Big capital S) is of type string so you can do anything with it you can 
 
 Functions which are not part of the main golang strings package but add to the functionality and comfort functions were only tested on Linux:
 
-###### **Substr(start, end int) String**
+## **Substr(start, end int) String**
 A normal substring function utf-8 compatible. 
 
 ###### **ASCIIsubstr(start, end int) String**
