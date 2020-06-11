@@ -28,7 +28,7 @@ if (s.Contains("at")) {
 }
 ```
 
-In addition I added some comfort functions which you can see below. If you have any more ideas what one would need as functions in string processing which should be added please let me know. I will add them with Joy! Because Go is a wunderful language. And it could even be better if we work on smoothing out the edges so it gets more accessible.
+In addition I added some comfort functions which you can see below. If you have any more ideas what one would need as functions in string processing which should be added please let me know. I will add them with Joy! Because Go is a wonderful language. And it could even be better if we work on smoothing out the edges so it gets more accessible.
 
 
 
