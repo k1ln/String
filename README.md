@@ -44,13 +44,13 @@ String (Big capital S) is of type string so you can do anything with it you can 
 
 Functions which are not part of the main golang strings package but add to the functionality and comfort functions were only tested on Linux:
 
-**Substr(start, end int) String**
+###### **Substr(start, end int) String**
 A normal substring function utf-8 compatible. 
 
-**ASCIIsubstr(start, end int) String**
+###### **ASCIIsubstr(start, end int) String**
 Same as subtring but only for ASCII Strings => is much faster if you only use ASCII.
 
-**ParseDateLocal(format String,location String) time.Time**
+###### **ParseDateLocal(format String,location String) time.Time**
 Date parsing in Golang is freaky. I didn't like it. So wrote it it works more like normally.
 
 Like this:
@@ -94,189 +94,189 @@ Z:Z:Z as golang Z07:00:00
 if you need a minus before the Z's just add one.
 
 
-**Md5() String**
+###### **Md5() String**
 Generates a md5 String out of provided String.
 
-**Sha1() String**
+###### **Sha1() String**
 Generates a sha1 String out of provided String.
 
-**AesEncrypt(key String) String**
+###### **AesEncrypt(key String) String**
 Creates an  Aes Encrypted String with provided key. Uses CTR as encryption algorithm.
 
-**AesEncryptByte(key String) []byte**
+###### **AesEncryptByte(key String) []byte**
 Returns bytes instead of String. Same as AesEncrypt.
 
-**AesDecrypt(key String) String** 
+###### **AesDecrypt(key String) String** 
 Decrypts a AES String with provided key.
 
-**AesDecryptByte(key String) String**
+###### **AesDecryptByte(key String) String**
 Please convert the []byte slice to String first. This will work!
 
-**GenerateAesKeyHex(length int)**
+###### **GenerateAesKeyHex(length int)**
 Generate a hex-key out of a String with the possible lengths of 16,24,32 for 128, 192, 256-bit encryption.
 
-**IsEmail() bool** 
+###### **IsEmail() bool** 
 Checks if String is an email.
 
-**IsUrl() bool**
+###### **IsUrl() bool**
 Checks if String is an URL.
 
-**IsWholeNumber() bool**
+###### **IsWholeNumber() bool**
 Checks if String is a whole number.
 
-**IsIpV4() bool**
+###### **IsIpV4() bool**
 Checks if String is an IPV4 network adress.
 
-**IsIpV6() bool**
+###### **IsIpV6() bool**
 Checks if String is an IPV6 network adress.
 
-**IsIp() bool** 
+###### **IsIp() bool** 
 Checks if String is ip adress.
 
-**IsHtmlTag() bool** 
+###### **IsHtmlTag() bool** 
 Checks if String is an html tag. 
 
-**IsPhoneNumber() bool**
+###### **IsPhoneNumber() bool**
 Checks if String is a phone number. 
 
-**IsFilePath() bool**
+###### **IsFilePath() bool**
 Checks if String is a filepath. 
 
-**IsUserName (min int, max int) bool**
+###### **IsUserName (min int, max int) bool**
 Checks if String is a valid user name with min and max number of characters.
 
-**IsZipCode(country String) bool**
+###### **IsZipCode(country String) bool**
 Checks if String is ZipCode of provided country. Country should be provided in the countrycode-format => "DE => Germany, US => USA, FR => France etc..
 
-**IsIban(country String) bool**
+###### **IsIban(country String) bool**
 Checks if String is correct IBAN-Format doesn't check for 2-check digits at the beginning. Perhaps will add this in the future. Use country code for country like in IsZipCode.
 
-**PwUpperCase (number int) bool**
+###### **PwUpperCase (number int) bool**
 Checks if String contains number of uppercases.
 
-**PwSpecialCase(number int) bool**
+###### **PwSpecialCase(number int) bool**
 Checks if String contains number of special cases.
 
-**PwDigits** 
+###### **PwDigits** 
 Checks if String contains number of digits. 
 
-**PwLowerCase(number int) bool**
+###### **PwLowerCase(number int) bool**
 Checks if String contains number of lowercases.
 
-**Get() String**
+###### **Get() String**
 Get contents of a url adress. 
 
-**Json() map[String]interface{}**
+###### **Json() map[String]interface{}**
 A very basic JSON parse function of a String. But there is something TODO here so better write your own. Only for very basic usage. 
 
-**Open() String**
+###### **Open() String**
 Open File from provided String path and return String on file. 
 
-**Exists() bool**
+###### **Exists() bool**
 Checks if String of path exists as url or exists as path on the system.
 
-**GetContents() String**
+###### **GetContents() String**
 Get String contents of file or url adress provided. 
 
-**WriteToFile(path String)**
+###### **WriteToFile(path String)**
 Write String to provided path as file. 
 
-**URLEncode() String**
+###### **URLEncode() String**
 Encode String in URL-Format => Similar to Query Escape.
 
-**URLDecode() String**
+###### **URLDecode() String**
 Decode URL-encoded String.
 
-**Post(url String, contenttype String) String**
+###### **Post(url String, contenttype String) String**
 Basic Post with contenttype. 
 
-**Execute() (String,String)**
+###### **Execute() (String,String)**
 Executes a command in command line. Returns result in first String and error in second String.
 
-**Php() (String,String)**
+###### **Php() (String,String)**
 Run String as php code and get result, error Strings back. You need php-cli installed.
 
-**Python() (String,String)**
+###### **Python() (String,String)**
 Run String in Python if Python installed. Returns result,error. 
 
-**Node() (String,String)**
+###### **Node() (String,String)**
 Run String in nodejs if nodejs is installed. Returns result,error.
 
-**Perl() (String,String)**
+###### **Perl() (String,String)**
 Run String in Perl if installed. Returns result,error.
 
-**PhpFile() (String,String)**
+###### **PhpFile() (String,String)**
 Run php file provided as path in String. Returns result,error.
 
-**PythonFile() (String,String)** 
+###### **PythonFile() (String,String)** 
 Run python file provided as path in String. Returns result,error.
 
-**NodeFile() (String,String)**
+###### **NodeFile() (String,String)**
 Run nodejs file provided as path in String. Returns result,error.
 
-**PerlFile() (String,String)**
+###### **PerlFile() (String,String)**
 Run perl file provided as path in String. Returns result,error.
 
-**Int() int**
+###### **Int() int**
 Converts String to int.
 
-**Int32() int32**
+###### **Int32() int32**
 Converts String to Int32.
 
-**Int64() int64**
+###### **Int64() int64**
 Converts String to Int64.
 
-**Uint32() uint32**
+###### **Uint32() uint32**
 Converts String to uint32.
 
-**Uint64() uint64**
+###### **Uint64() uint64**
 Converts String to uint64.
 
-**Bool() bool** 
+###### **Bool() bool** 
 Converts String to bool.
 
-**Float64() float64**
+###### **Float64() float64**
 Converts String to float64. 
 
-**Float32() float32**
+###### **Float32() float32**
 Converts String to float32.
 
-**Uint() uint**
+###### **Uint() uint**
 Converts String to uint.
 
-**StripTags() String**
+###### **StripTags() String**
 Strips HTML-Tags from String. 
 
-**Find(substring String) int**
+###### **Find(substring String) int**
 Find first appearance of substring in String.
 
-**FindAll(substring String) []int**
+###### **FindAll(substring String) []int**
 Find all appearances of substring in String.
 
-**Left(length int) String**
+###### **Left(length int) String**
 Get number of characters from the left of String.
 
-**Right(length int) String**
+###### **Right(length int) String**
 Get number of characters from the right of String.
 
-**Reverse() String**
+###### **Reverse() String**
 Reverse the String. Why in the world you want that but you can do it. 
 
-**WordCount() map[String]int**
+###### **WordCount() map[String]int**
 Count all Words in a String and return as ordered map.
 
-**RandomString(length int) String**
+###### **RandomString(length int) String**
 Genrate a random String of length length.
 
-**AddLeft(ss String) String**
+###### **AddLeft(ss String) String**
 Add String to Left of String.
 
-**AddRight(ss String) String**
+###### **AddRight(ss String) String**
 Add String right of String.
 
-**AddPos(ss String,pos int) String**
+###### **AddPos(ss String,pos int) String**
 Add ss String to String at position po.
 
-**FindInFiles(strpath String) Strings**
+###### **FindInFiles(strpath String) Strings**
 Search for String in all files provided by path.
 
