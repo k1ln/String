@@ -47,7 +47,7 @@ Functions which are not part of the main golang strings package but add to the f
 ### **Substr(start, end int) String**
 A normal substring function utf-8 compatible. 
 
-###**ASCIIsubstr(start, end int) String**
+### **ASCIIsubstr(start, end int) String**
 Same as subtring but only for ASCII Strings => is much faster if you only use ASCII.
 
 ### **ParseDateLocal(format String,location String) time.Time**
