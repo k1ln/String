@@ -18,7 +18,7 @@ like in javascript for example. And i saw that String handling in go is not very
 
 It feels more natural "to me" to use the function after the String the function uses. Readibility "for me" is much better like this. I benchmarked all fuctions in comparison from object-oriented to functional approach and didn't encounter any major performance deficits. You can run the benchmarks yourself.
 
-All functions from the golang "strings" package were added. 
+**All functions from the golang "strings" package were added.** 
 
 so this works:
 ```
