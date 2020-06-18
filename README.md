@@ -68,7 +68,7 @@ timeinBerlin := s.ParseDateLocal(format,"Europe/Berlin")
 
 Parses local date string into time with normally used syntax: 
 
-*YY*: last two digits of year.
+__*YY*__: last two digits of year.
 
 *YYYY*: full Year.
 
