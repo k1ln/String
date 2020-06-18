@@ -67,39 +67,57 @@ timeinBerlin := s.ParseDateLocal(format,"Europe/Berlin")
 ```
 
 Parses local date string into time with normally used syntax: 
-YY: last two digits of year.
-YYYY: full Year.
 
-M: 1 digit month.
-MM: two digit month.
-MMM: three letter month.
-MMMM: full name month 
+*YY*: last two digits of year.
 
-D: 1 digit day.
-DD: two digit day.
-DDD: three letter day.
-DDDD: full name day.
+*YYYY*: full Year.
 
-hh: hours 24 
-hh12: hours 12 
 
-m: single digit minutes
-mm: double digit minutes
+*M*: 1 digit month.
 
-s: single digit seconds
-ss: double digit seconds 
+*MM*: two digit month.
 
-9 stays for milliseconds
+*MMM*: three letter month.
 
-Z as golang Z07
+*MMMM*: full name month 
 
-ZZ as golang Z0700
 
-ZZZ as golang Z070000
+*D*: 1 digit day.
 
-Z:Z as golang Z07:00
+*DD*: two digit day.
 
-Z:Z:Z as golang Z07:00:00
+*DDD*: three letter day.
+
+*DDDD*: full name day.
+
+
+*hh*: hours 24 
+
+*hh12*: hours 12 
+
+
+*m*: single digit minutes
+
+*mm*: double digit minutes
+
+
+*s*: single digit seconds
+
+*ss*: double digit seconds 
+
+
+*9* stays for milliseconds
+
+
+*Z* as golang Z07
+
+*ZZ* as golang Z0700
+
+*ZZZ* as golang Z070000
+
+*Z:Z* as golang Z07:00
+
+*Z:Z:Z* as golang Z07:00:00
 
 
 if you need a minus before the Z's just add one.
