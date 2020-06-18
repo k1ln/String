@@ -1,4 +1,5 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/k1ln/String)](https://goreportcard.com/report/github.com/k1ln/String)
+[![Build Status](https://travis-ci.com/k1ln/String.svg?branch=master)](https://travis-ci.com/k1ln/String)
 # String
 
 did you ever ask yourself why go has no Object for string? Sou you can do stuff like: 
