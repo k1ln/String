@@ -1,33 +1,33 @@
 package String
 
 import (
-  "strings"
-  "crypto/md5"
-  "crypto/sha1"
-  "crypto/aes" 
-  "crypto/cipher"
-  "crypto/rand"
-  "unicode"
-  "unicode/utf8"
-  "io"
-  "io/ioutil"
-  "encoding/hex"
-  "regexp"
-  b64 "encoding/base64"
-  "net/http"
-  "time"	
-  "encoding/json"
-  "net/url"
-  "os"
-  "bytes"
-  "os/exec"
-  "fmt"
-  "strconv"
-  "sort"
-  mrand "math/rand"
-  "path/filepath"
-  "bufio"
-  "reflect"
+	"bufio"
+	"bytes"
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/md5"
+	"crypto/rand"
+	"crypto/sha1"
+	b64 "encoding/base64"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"io"
+	"io/ioutil"
+	mrand "math/rand"
+	"net/http"
+	"net/url"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
+	"unicode"
+	"unicode/utf8"
 )
 
 type String string
@@ -36,45 +36,46 @@ type Strings []String
 var Timeout = 5
 var asciiSpace = [256]uint8{'\t': 1, '\n': 1, '\v': 1, '\f': 1, '\r': 1, ' ': 1}
 
-
 func (s String) substr(start, end int) String {
-  counter, startIdx := 0, 0
-  end = end + start 
-  for i := range s {
-    if counter == start {
-      startIdx = i
-    }
-    if counter == end {
-      return s[startIdx:i]
-    }
-    counter++
-  }
-  return s[startIdx:]
+	counter, startIdx := 0, 0
+	end = end + start
+	for i := range s {
+		if counter == start {
+			startIdx = i
+		}
+		if counter == end {
+			return s[startIdx:i]
+		}
+		counter++
+	}
+	return s[startIdx:]
 }
-
-
 
 func (s String) Substr(start, end int) String {
 	counter, startIdx := 0, 0
 	end = end + start
 	for i := range s {
-	  if counter == start {
-		startIdx = i
-	  }
-	  if counter == end {
-		return s[startIdx:i]
-	  }
-	  counter++
+		if counter == start {
+			startIdx = i
+		}
+		if counter == end {
+			return s[startIdx:i]
+		}
+		counter++
 	}
 	return s[startIdx:]
-  }
+}
+
+func (s String) Tostring() string {
+	return string(s)
+}
 
 func (s String) ASCIIsubstr(start, end int) String {
-  lens := start + end
-  if lens > len(s)-start {
-    lens = len(s) - start + 1
-  }
-  return s[start:lens]
+	lens := start + end
+	if lens > len(s)-start {
+		lens = len(s) - start + 1
+	}
+	return s[start:lens]
 }
 
 func (s String) Compare(b String) int {
@@ -100,13 +101,12 @@ func (s String) ContainsRune(r rune) bool {
 }
 
 func (s String) Count(substr String) int {
-	return strings.Count(string(s),string(substr))
+	return strings.Count(string(s), string(substr))
 }
 
 func (s String) EqualFold(t String) bool {
-	return strings.EqualFold(string(s),string(t))
+	return strings.EqualFold(string(s), string(t))
 }
-
 
 func (s String) Fields() Strings {
 	// First count the fields.
@@ -157,7 +157,6 @@ func (s String) Fields() Strings {
 	return a
 }
 
-
 func (s String) FieldsFunc(f func(rune) bool) []String {
 	// A span is used to record a slice of s of the form s[start:end].
 	// The start index is inclusive and the end index is exclusive.
@@ -198,8 +197,6 @@ func (s String) FieldsFunc(f func(rune) bool) []String {
 	return a
 }
 
-
-
 func (s String) HasPrefix(prefix String) bool {
 	l := len(prefix)
 	return len(s) >= l && s[0:l] == prefix
@@ -220,15 +217,15 @@ func (s String) length() int {
 }
 
 func (s String) Index(substr String) int {
-	return strings.Index(string(s),string(substr))
+	return strings.Index(string(s), string(substr))
 }
 
 func (s String) IndexAny(chars String) int {
-	return strings.IndexAny(string(s),string(chars))
+	return strings.IndexAny(string(s), string(chars))
 }
 
 func (s String) IndexByte(c byte) int {
-	return strings.IndexByte(string(s),c)
+	return strings.IndexByte(string(s), c)
 }
 
 func (s String) IndexFunc(f func(rune) bool) int {
@@ -278,11 +275,11 @@ func (s Strings) Join(sep String) String {
 }
 
 func (s String) LastIndex(substr String) int {
-	return strings.LastIndex(string(s),string(substr))
+	return strings.LastIndex(string(s), string(substr))
 }
 
 func (s String) LastIndexAny(chars String) int {
-	return strings.LastIndexAny(string(s),string(chars))
+	return strings.LastIndexAny(string(s), string(chars))
 }
 
 func (s String) LastIndexByte(c byte) int {
@@ -310,7 +307,7 @@ func (s String) lastIndexFunc(f func(rune) bool, truth bool) int {
 }
 
 func (s String) Map(mapping func(rune) rune) String {
-	return String(strings.Map(mapping,string(s)))
+	return String(strings.Map(mapping, string(s)))
 }
 
 func (s String) Repeat(count int) String {
@@ -346,14 +343,14 @@ func (s String) Repeat(count int) String {
 }
 
 func (s String) Replace(old, new String, n int) String {
-	return String(strings.Replace(string(s),string(old),string(new),n))
+	return String(strings.Replace(string(s), string(old), string(new), n))
 }
 
 func (s String) ReplaceAll(old, new String) String {
 	return s.Replace(old, new, -1)
 }
 
-func  (s String) Split(sep String) []String {
+func (s String) Split(sep String) []String {
 	return s.genSplit(sep, 0, -1)
 }
 
@@ -519,7 +516,7 @@ func (s String) ToUpper() String {
 	return s.Map(unicode.ToUpper)
 }
 
-func (s String)ToTitleSpecial(c unicode.SpecialCase) String {
+func (s String) ToTitleSpecial(c unicode.SpecialCase) String {
 	return s.Map(c.ToTitle)
 }
 
@@ -527,11 +524,10 @@ func (s String) ToUpperSpecial(c unicode.SpecialCase) String {
 	return s.Map(c.ToUpper)
 }
 
-
 // I dont know how to test this TODO
 func (s String) ToValidUTF8(replacement String) String {
 	var b strings.Builder
-	str:= string(s)
+	str := string(s)
 
 	for i, c := range str {
 		if c != utf8.RuneError {
@@ -669,7 +665,7 @@ func (s String) TrimRight(cutset String) String {
 	return s.TrimRightFunc(cutset.makeCutsetFunc())
 }
 
-func(s String) TrimSpace() String {
+func (s String) TrimSpace() String {
 	// Fast path for ASCII: look for the first ASCII non-space byte
 	start := 0
 	for ; start < len(s); start++ {
@@ -709,6 +705,8 @@ func (s String) TrimSuffix(suffix String) String {
 	return s
 }
 
+//own functions
+
 func (s String) Md5() String {
 	h := md5.New()
 	io.WriteString(h, string(s))
@@ -730,7 +728,7 @@ func (s String) AesEncrypt(key String) String {
 		panic(err)
 	}
 	blocksize := aes.BlockSize
-	
+
 	var cypher []byte = make([]byte, blocksize+len(s))
 	IV := cypher[:blocksize]
 	if _, err := io.ReadFull(rand.Reader, IV); err != nil {
@@ -752,7 +750,7 @@ func (s String) AesEncryptByte(key String) []byte {
 		panic(err)
 	}
 	blocksize := aes.BlockSize
-	
+
 	var cypher []byte = make([]byte, blocksize+len(s))
 	IV := cypher[:blocksize]
 	if _, err := io.ReadFull(rand.Reader, IV); err != nil {
@@ -767,8 +765,8 @@ func (s String) AesEncryptByte(key String) []byte {
 
 //needs base64encoded string
 func (s String) AesDecrypt(key String) String {
-	stra,_ := b64.StdEncoding.DecodeString(string(s))
-	str := []byte(stra)	
+	stra, _ := b64.StdEncoding.DecodeString(string(s))
+	str := []byte(stra)
 	hexkey, _ := hex.DecodeString(string(key))
 	aescipher, err := aes.NewCipher(hexkey)
 	if err != nil {
@@ -776,7 +774,7 @@ func (s String) AesDecrypt(key String) String {
 	}
 	//decrypt
 	//IV removed from beginning of the cypher
-	IV := str[:aes.BlockSize]	
+	IV := str[:aes.BlockSize]
 	text := make([]byte, len(str[aes.BlockSize:]))
 	ctr := cipher.NewCTR(aescipher, IV)
 	ctr.XORKeyStream(text, str[aes.BlockSize:])
@@ -785,7 +783,7 @@ func (s String) AesDecrypt(key String) String {
 
 //Convert byte to String object to use it. It will work
 func (s String) AesDecryptByte(key String) String {
-	str := []byte(s)	
+	str := []byte(s)
 	hexkey, _ := hex.DecodeString(string(key))
 	aescipher, err := aes.NewCipher(hexkey)
 	if err != nil {
@@ -793,7 +791,7 @@ func (s String) AesDecryptByte(key String) String {
 	}
 	//decrypt
 	//IV removed from beginning of the cypher
-	IV := str[:aes.BlockSize]	
+	IV := str[:aes.BlockSize]
 	text := make([]byte, len(str[aes.BlockSize:]))
 	ctr := cipher.NewCTR(aescipher, IV)
 	ctr.XORKeyStream(text, str[aes.BlockSize:])
@@ -802,7 +800,7 @@ func (s String) AesDecryptByte(key String) String {
 
 // generate 16 24 or 32 byte key for 128 192 or 256-bit Encryption
 func (s String) GenerateAesKeyHex(length int) String {
-	if (length != 16 && length != 24 && length != 32) {
+	if length != 16 && length != 24 && length != 32 {
 		panic("Please use 16,24 or 32 as Key length")
 	}
 	var key []byte = make([]byte, length)
@@ -813,13 +811,11 @@ func (s String) GenerateAesKeyHex(length int) String {
 	return String(hex.EncodeToString(key))
 }
 
-
-
-
 var reEmail = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
 var reUserNamestr String = "^[a-z0-9_-]{{min},{max}}$"
 var reUrl = regexp.MustCompile("https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#()?&//=]*)")
-//var reComplexPw = regexp.MustCompile("(?=(.*[0-9]))(?=.*[\\!@#$%^&*()\\[\\]{}\\-_+=~`|:;\"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}")  
+
+//var reComplexPw = regexp.MustCompile("(?=(.*[0-9]))(?=.*[\\!@#$%^&*()\\[\\]{}\\-_+=~`|:;\"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}")
 var reWholeNumber = regexp.MustCompile("^\\d+$")
 var reIsIpV4 = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
 var reIsIpV6 = regexp.MustCompile("(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))")
@@ -828,7 +824,7 @@ var reIsHtmlTag = regexp.MustCompile("<\\/?[\\w\\s]*>|<.+[\\W]>")
 var reIsPhoneNumber = regexp.MustCompile("^(?:(?:\\(?(?:00|\\+)([1-4]\\d\\d|[1-9]\\d?)\\)?)?[\\-\\.\\ \\\\\\/]?)?((?:\\(?\\d{1,}\\)?[\\-\\.\\ \\\\\\/]?){0,})(?:[\\-\\.\\ \\\\\\/]?(?:#|ext\\.?|extension|x)[\\-\\.\\ \\\\\\/]?(\\d+))?$")
 var reIsFilePath = regexp.MustCompile("^(.+)/([^/]+)$")
 
-var reZipMap = map[String]String {
+var reZipMap = map[String]String{
 	"GB": "GIR[ ]?0AA|((AB|AL|B|BA|BB|BD|BH|BL|BN|BR|BS|BT|CA|CB|CF|CH|CM|CO|CR|CT|CV|CW|DA|DD|DE|DG|DH|DL|DN|DT|DY|E|EC|EH|EN|EX|FK|FY|G|GL|GY|GU|HA|HD|HG|HP|HR|HS|HU|HX|IG|IM|IP|IV|JE|KA|KT|KW|KY|L|LA|LD|LE|LL|LN|LS|LU|M|ME|MK|ML|N|NE|NG|NN|NP|NR|NW|OL|OX|PA|PE|PH|PL|PO|PR|RG|RH|RM|S|SA|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TA|TD|TF|TN|TQ|TR|TS|TW|UB|W|WA|WC|WD|WF|WN|WR|WS|WV|YO|ZE)(\\d[\\dA-Z]?[ ]?\\d[ABD-HJLN-UW-Z]{2}))|BFPO[ ]?\\d{1,4}",
 	"JE": "JE\\d[\\dA-Z]?[ ]?\\d[ABD-HJLN-UW-Z]{2}",
 	"GG": "GY\\d[\\dA-Z]?[ ]?\\d[ABD-HJLN-UW-Z]{2}",
@@ -989,124 +985,124 @@ var reZipMap = map[String]String {
 	"YT": "976\\d{2}",
 }
 
-var reIbanMap = map[String]String {
-	"AL" : "^AL\\d{10}[0-9A-Z]{16}$",
-	"AD" : "^AD\\d{10}[0-9A-Z]{12}$",
-	"AT" : "^AT\\d{18}$",
-	"BH" : "^BH\\d{2}[A-Z]{4}[0-9A-Z]{14}$",
-	"BE" : "^BE\\d{14}$",
-	"BA" : "^BA\\d{18}$",
-	"BG" : "^BG\\d{2}[A-Z]{4}\\d{6}[0-9A-Z]{8}$",
-	"HR" : "^HR\\d{19}$",
-	"CY" : "^CY\\d{10}[0-9A-Z]{16}$",
-	"CZ" : "^CZ\\d{22}$",
-	"DK" : "^DK\\d{16}$|^FO\\d{16}$|^GL\\d{16}$",
-	"DO" : "^DO\\d{2}[0-9A-Z]{4}\\d{20}$",
-	"EE" : "^EE\\d{18}$",
-	"FI" : "^FI\\d{16}$",
-	"FR" : "^FR\\d{12}[0-9A-Z]{11}\\d{2}$",
-	"GE" : "^GE\\d{2}[A-Z]{2}\\d{16}$",
-	"DE" : "^DE\\d{20}$",
-	"GI" : "^GI\\d{2}[A-Z]{4}[0-9A-Z]{15}$",
-	"GR" : "^GR\\d{9}[0-9A-Z]{16}$",
-	"HU" : "^HU\\d{26}$",
-	"IS" : "^IS\\d{24}$",
-	"IE" : "^IE\\d{2}[A-Z]{4}\\d{14}$",
-	"IL" : "^IL\\d{21}$",
-	"IT" : "^IT\\d{2}[A-Z]\\d{10}[0-9A-Z]{12}$",
-	"KZ" : "^[A-Z]{2}\\d{5}[0-9A-Z]{13}$",
-	"KW" : "^KW\\d{2}[A-Z]{4}22!$",
-	"LV" : "^LV\\d{2}[A-Z]{4}[0-9A-Z]{13}$",
-	"LB" : "^LB\\d{6}[0-9A-Z]{20}$",
-	"LI" : "^LI\\d{7}[0-9A-Z]{12}$",
-	"LT" : "^LT\\d{18}$",
-	"LU" : "^LU\\d{5}[0-9A-Z]{13}$",
-	"MK" : "^MK\\d{5}[0-9A-Z]{10}\\d{2}$",
-	"MT" : "^MT\\d{2}[A-Z]{4}\\d{5}[0-9A-Z]{18}$",
-	"MR" : "^MR13\\d{23}$",
-	"MU" : "^MU\\d{2}[A-Z]{4}\\d{19}[A-Z]{3}$",
-	"MC" : "^MC\\d{12}[0-9A-Z]{11}\\d{2}$",
-	"ME" : "^ME\\d{20}$",
-	"NL" : "^NL\\d{2}[A-Z]{4}\\d{10}$",
-	"NO" : "^NO\\d{13}$",
-	"PL" : "^PL\\d{10}[0-9A-Z]{,16}n$",
-	"PT" : "^PT\\d{23}$",
-	"RO" : "^RO\\d{2}[A-Z]{4}[0-9A-Z]{16}$",
-	"SM" : "^SM\\d{2}[A-Z]\\d{10}[0-9A-Z]{12}$",
-	"SA" : "^SA\\d{4}[0-9A-Z]{18}$",
-	"RS" : "^RS\\d{20}$",
-	"SK" : "^SK\\d{22}$",
-	"SI" : "^SI\\d{17}$",
-	"ES" : "^ES\\d{22}$",
-	"SE" : "^SE\\d{22}$",
-	"CH" : "^CH\\d{7}[0-9A-Z]{12}$",
-	"TN" : "^TN59\\d{20}$",
-	"TR" : "^TR\\d{7}[0-9A-Z]{17}$",
-	"AE" : "^AE\\d{21}$",
-	"GB" : "^GB\\d{2}[A-Z]{4}\\d{14}$",
+var reIbanMap = map[String]String{
+	"AL": "^AL\\d{10}[0-9A-Z]{16}$",
+	"AD": "^AD\\d{10}[0-9A-Z]{12}$",
+	"AT": "^AT\\d{18}$",
+	"BH": "^BH\\d{2}[A-Z]{4}[0-9A-Z]{14}$",
+	"BE": "^BE\\d{14}$",
+	"BA": "^BA\\d{18}$",
+	"BG": "^BG\\d{2}[A-Z]{4}\\d{6}[0-9A-Z]{8}$",
+	"HR": "^HR\\d{19}$",
+	"CY": "^CY\\d{10}[0-9A-Z]{16}$",
+	"CZ": "^CZ\\d{22}$",
+	"DK": "^DK\\d{16}$|^FO\\d{16}$|^GL\\d{16}$",
+	"DO": "^DO\\d{2}[0-9A-Z]{4}\\d{20}$",
+	"EE": "^EE\\d{18}$",
+	"FI": "^FI\\d{16}$",
+	"FR": "^FR\\d{12}[0-9A-Z]{11}\\d{2}$",
+	"GE": "^GE\\d{2}[A-Z]{2}\\d{16}$",
+	"DE": "^DE\\d{20}$",
+	"GI": "^GI\\d{2}[A-Z]{4}[0-9A-Z]{15}$",
+	"GR": "^GR\\d{9}[0-9A-Z]{16}$",
+	"HU": "^HU\\d{26}$",
+	"IS": "^IS\\d{24}$",
+	"IE": "^IE\\d{2}[A-Z]{4}\\d{14}$",
+	"IL": "^IL\\d{21}$",
+	"IT": "^IT\\d{2}[A-Z]\\d{10}[0-9A-Z]{12}$",
+	"KZ": "^[A-Z]{2}\\d{5}[0-9A-Z]{13}$",
+	"KW": "^KW\\d{2}[A-Z]{4}22!$",
+	"LV": "^LV\\d{2}[A-Z]{4}[0-9A-Z]{13}$",
+	"LB": "^LB\\d{6}[0-9A-Z]{20}$",
+	"LI": "^LI\\d{7}[0-9A-Z]{12}$",
+	"LT": "^LT\\d{18}$",
+	"LU": "^LU\\d{5}[0-9A-Z]{13}$",
+	"MK": "^MK\\d{5}[0-9A-Z]{10}\\d{2}$",
+	"MT": "^MT\\d{2}[A-Z]{4}\\d{5}[0-9A-Z]{18}$",
+	"MR": "^MR13\\d{23}$",
+	"MU": "^MU\\d{2}[A-Z]{4}\\d{19}[A-Z]{3}$",
+	"MC": "^MC\\d{12}[0-9A-Z]{11}\\d{2}$",
+	"ME": "^ME\\d{20}$",
+	"NL": "^NL\\d{2}[A-Z]{4}\\d{10}$",
+	"NO": "^NO\\d{13}$",
+	"PL": "^PL\\d{10}[0-9A-Z]{,16}n$",
+	"PT": "^PT\\d{23}$",
+	"RO": "^RO\\d{2}[A-Z]{4}[0-9A-Z]{16}$",
+	"SM": "^SM\\d{2}[A-Z]\\d{10}[0-9A-Z]{12}$",
+	"SA": "^SA\\d{4}[0-9A-Z]{18}$",
+	"RS": "^RS\\d{20}$",
+	"SK": "^SK\\d{22}$",
+	"SI": "^SI\\d{17}$",
+	"ES": "^ES\\d{22}$",
+	"SE": "^SE\\d{22}$",
+	"CH": "^CH\\d{7}[0-9A-Z]{12}$",
+	"TN": "^TN59\\d{20}$",
+	"TR": "^TR\\d{7}[0-9A-Z]{17}$",
+	"AE": "^AE\\d{21}$",
+	"GB": "^GB\\d{2}[A-Z]{4}\\d{14}$",
 }
 
-func (s String) string() string{
+func (s String) string() string {
 	return string(s)
 }
 
-func (s String) IsEmail() bool{
+func (s String) IsEmail() bool {
 	return reEmail.MatchString(s.string())
 }
 
-func (s String) IsUrl() bool{
+func (s String) IsUrl() bool {
 	return reUrl.MatchString(s.string())
 }
+
 /*
 func (s String) IsComplexPw() bool{
 	return reComplexPw.MatchString(s.string())
 }
 */
 
-func (s String) IsWholeNumber() bool{
+func (s String) IsWholeNumber() bool {
 	return reWholeNumber.MatchString(s.string())
 }
 
-func (s String) IsIpV4() bool{
+func (s String) IsIpV4() bool {
 	return reIsIpV4.MatchString(s.string())
 }
 
-func (s String) IsIpV6() bool{
+func (s String) IsIpV6() bool {
 	return reIsIpV6.MatchString(s.string())
 }
 
-func (s String) IsIp() bool{
+func (s String) IsIp() bool {
 	return reIsIp.MatchString(s.string())
 }
 
-func (s String) IsHtmlTag() bool{
+func (s String) IsHtmlTag() bool {
 	return reIsHtmlTag.MatchString(s.string())
 }
 
-func (s String) IsPhoneNumber() bool{
+func (s String) IsPhoneNumber() bool {
 	return reIsPhoneNumber.MatchString(s.string())
 }
 
-func (s String) IsFilePath() bool{
+func (s String) IsFilePath() bool {
 	return reIsFilePath.MatchString(s.string())
 }
 
-func (s String) IsUserName(min int, max int) bool{
-	reUserName := reUserNamestr.ReplaceAll("{min}",String(strconv.Itoa(min))).ReplaceAll("{max}",String(strconv.Itoa(max)))
+func (s String) IsUserName(min int, max int) bool {
+	reUserName := reUserNamestr.ReplaceAll("{min}", String(strconv.Itoa(min))).ReplaceAll("{max}", String(strconv.Itoa(max)))
 	rexUserName := regexp.MustCompile(reUserName.string())
 	return rexUserName.MatchString(string(s))
 }
 
-func (s String) IsZipCode(country String) bool{
+func (s String) IsZipCode(country String) bool {
 	var reIsZip = regexp.MustCompile(reZipMap[country].string())
 	return reIsZip.MatchString(s.string())
 }
 
-func (s String) IsIban(country String) bool{
-	var reIsIban= regexp.MustCompile(reIbanMap[country].string())
+func (s String) IsIban(country String) bool {
+	var reIsIban = regexp.MustCompile(reIbanMap[country].string())
 	return reIsIban.MatchString(s.string())
 }
-
 
 var reIsZipFast = regexp.MustCompile("\\d{5}|\\d{4}")
 
@@ -1114,7 +1110,7 @@ func (s String) PrecompileIsZipCodeFast(country String) {
 	reIsZipFast = regexp.MustCompile(reZipMap[country].string())
 }
 
-func (s String) IsZipCodeFast(country String) bool{
+func (s String) IsZipCodeFast(country String) bool {
 	return reIsZipFast.MatchString(s.string())
 }
 
@@ -1124,76 +1120,76 @@ func (s String) PrecompileIsIbanFast(country String) {
 	reIsIbanFast = regexp.MustCompile(reIbanMap[country].string())
 }
 
-func (s String) IsIbanFast(country String) bool{
-	var reIsIban= regexp.MustCompile(reIbanMap[country].string())
+func (s String) IsIbanFast(country String) bool {
+	var reIsIban = regexp.MustCompile(reIbanMap[country].string())
 	return reIsIban.MatchString(s.string())
 }
 
-func(s String) PwUpperCase(number int) bool {
+func (s String) PwUpperCase(number int) bool {
 	if number == 0 {
 		return true
 	} else {
 		regxstring := "^"
-	i:=0
-	for i < number {
-		regxstring += ".*[A-Z]"
-		i++
-	}
-	var re = regexp.MustCompile(regxstring)
-	return re.MatchString(string(s))
+		i := 0
+		for i < number {
+			regxstring += ".*[A-Z]"
+			i++
+		}
+		var re = regexp.MustCompile(regxstring)
+		return re.MatchString(string(s))
 	}
 }
 
-func(s String) PwSpecialCase(number int) bool {
+func (s String) PwSpecialCase(number int) bool {
 	if number == 0 {
 		return true
 	} else {
 		regxstring := "^"
-	i:=0
-	for i < number {
-		regxstring += ".*[!@#$%^&*(),.?\":{}|<>]"
-		i++
-	}
-	var re = regexp.MustCompile(regxstring)
-	return re.MatchString(string(s))
+		i := 0
+		for i < number {
+			regxstring += ".*[!@#$%^&*(),.?\":{}|<>]"
+			i++
+		}
+		var re = regexp.MustCompile(regxstring)
+		return re.MatchString(string(s))
 	}
 }
 
-func(s String) PwDigits(number int) bool {
+func (s String) PwDigits(number int) bool {
 	if number == 0 {
 		return true
 	} else {
 		regxstring := "^"
-	i:=0
-	for i < number {
-		regxstring += ".*[0-9]"
-		i++
-	}
-	var re = regexp.MustCompile(regxstring)
-	return re.MatchString(string(s))
+		i := 0
+		for i < number {
+			regxstring += ".*[0-9]"
+			i++
+		}
+		var re = regexp.MustCompile(regxstring)
+		return re.MatchString(string(s))
 	}
 }
 
-func(s String) PwLowerCase(number int) bool {
+func (s String) PwLowerCase(number int) bool {
 	if number == 0 {
 		return true
 	} else {
 		regxstring := "^"
-	i:=0
-	for i < number {
-		regxstring += ".*[0-9]"
-		i++
-	}
-	var re = regexp.MustCompile(regxstring)
-	return re.MatchString(string(s))
+		i := 0
+		for i < number {
+			regxstring += ".*[0-9]"
+			i++
+		}
+		var re = regexp.MustCompile(regxstring)
+		return re.MatchString(string(s))
 	}
 }
 
-func(s String) Get() String {
+func (s String) Get() String {
 	client := http.Client{
 		Timeout: time.Duration(Timeout) * time.Second,
 	}
-	resp,err := client.Get(string(s))
+	resp, err := client.Get(string(s))
 	if err != nil {
 		panic(err)
 	}
@@ -1206,27 +1202,27 @@ func(s String) Get() String {
 }
 
 //TODO I need something better here
-func(s String) Json() map[String]interface{} {
+func (s String) Json() map[String]interface{} {
 	var result map[String]interface{}
 	//for each in continue interface is varienat though
 	json.Unmarshal([]byte(s), &result)
 	return result
 }
 
-func(s String) Open() String {
-    return String(s.OpenByte())
+func (s String) Open() String {
+	return String(s.OpenByte())
 }
 
-func(s String) OpenByte() []byte {
+func (s String) OpenByte() []byte {
 	b, err := ioutil.ReadFile(string(s)) // just pass the file name
-    if err != nil {
-        panic(err)
+	if err != nil {
+		panic(err)
 	}
-	return b 
+	return b
 }
 
 func (s String) Exists() bool {
-	if (s.substr(0,7) == "http://" || s.substr(0,8) == "https://") {
+	if s.substr(0, 7) == "http://" || s.substr(0, 8) == "https://" {
 		resp, err := http.Get(string(s))
 		if err != nil {
 			return false
@@ -1242,11 +1238,11 @@ func (s String) Exists() bool {
 			return false
 		}
 		return !info.IsDir()
-	}	
+	}
 }
 
 func (s String) GetContents() String {
-	if (s.substr(0,7) == "http://" || s.substr(0,8) == "https://") {
+	if s.substr(0, 7) == "http://" || s.substr(0, 8) == "https://" {
 		return s.Get()
 	} else {
 		return s.Open()
@@ -1270,7 +1266,7 @@ func (s String) URLEncode() String {
 }
 
 func (s String) URLDecode() String {
-	dec,_ := url.QueryUnescape(string(s))
+	dec, _ := url.QueryUnescape(string(s))
 	return String(dec)
 }
 
@@ -1292,67 +1288,64 @@ func (s String) B64URLDecode() String {
 	return String(dec)
 }
 
-
 func (s String) Post(url String, contenttype String) String {
 	req, err := http.NewRequest("POST", string(url), bytes.NewBuffer([]byte(s)))
-    req.Header.Set("Content-Type", string(contenttype))
+	req.Header.Set("Content-Type", string(contenttype))
 
-    client := &http.Client{
+	client := &http.Client{
 		Timeout: time.Duration(Timeout) * time.Second,
 	}
-    resp, err := client.Do(req)
-    if err != nil {
-        panic(err)
-    }
-    defer resp.Body.Close()
-    body, _ := ioutil.ReadAll(resp.Body)
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
 	return String(body)
 }
 
-
-
 func (s String) CreateCommandFields() []String {
 	i := 0
-	inquotes := false 
+	inquotes := false
 	insinglequotes := false
 	oldi := 0
 	var commands []String
 	for i < len(s) {
-		if (i == len(s)-1) {
-			if (s.substr(len(s)-1,1)=="'"||s.substr(len(s)-1,1)=="\""){
-				commands = append(commands,s.substr(oldi,i-oldi))	
+		if i == len(s)-1 {
+			if s.substr(len(s)-1, 1) == "'" || s.substr(len(s)-1, 1) == "\"" {
+				commands = append(commands, s.substr(oldi, i-oldi))
 			} else {
-				commands = append(commands,s.substr(oldi,i-oldi+1))
+				commands = append(commands, s.substr(oldi, i-oldi+1))
 			}
-			
-		} else if (s.substr(i,1) == " " && 
-			inquotes == false && 
-			insinglequotes == false && 
-			s.substr(i-1,1) != "\"" && 
-			s.substr(i-1,1) != "'") {
-			commands = append(commands,s.substr(oldi,i-oldi))
+
+		} else if s.substr(i, 1) == " " &&
+			inquotes == false &&
+			insinglequotes == false &&
+			s.substr(i-1, 1) != "\"" &&
+			s.substr(i-1, 1) != "'" {
+			commands = append(commands, s.substr(oldi, i-oldi))
 			//fmt.Println("inquotes false space:" + s.substr(oldi,i-oldi))
-			oldi = i+1
-		} else if (inquotes == true && 
-			s.substr(i,1) == "\"" ) {
+			oldi = i + 1
+		} else if inquotes == true &&
+			s.substr(i, 1) == "\"" {
 			//fmt.Println("inquotes quote:" + s.substr(oldi,i-oldi+1))
 			inquotes = false
-			commands = append(commands,s.substr(oldi,i-oldi))
+			commands = append(commands, s.substr(oldi, i-oldi))
 			oldi = i + 1
-		} else if (insinglequotes == true && 
-			s.substr(i,1) == "'" ) {
+		} else if insinglequotes == true &&
+			s.substr(i, 1) == "'" {
 			//fmt.Println("inquotes quote:" + s.substr(oldi,i-oldi+1))
 			insinglequotes = false
-			commands = append(commands,s.substr(oldi,i-oldi))
+			commands = append(commands, s.substr(oldi, i-oldi))
 			oldi = i + 1
-		} else if (insinglequotes == false && inquotes == false && s.substr(i,1) == "\"") {
+		} else if insinglequotes == false && inquotes == false && s.substr(i, 1) == "\"" {
 			//fmt.Println("inquotes false quote:" + s.substr(oldi,i-oldi))
-			inquotes=true
+			inquotes = true
 			i++
 			oldi = i
-		} else if (inquotes == false && s.substr(i,1) == "'") {
+		} else if inquotes == false && s.substr(i, 1) == "'" {
 			//fmt.Println("inquotes false quote:" + s.substr(oldi,i-oldi))
-			insinglequotes=true
+			insinglequotes = true
 			i++
 			oldi = i
 		}
@@ -1361,14 +1354,14 @@ func (s String) CreateCommandFields() []String {
 	return commands
 }
 
-func (s String) Execute() (String,String) {
+func (s String) Execute() (String, String) {
 	commands := s.CreateCommandFields()
 	if len(commands) > 0 {
 		args := []string{}
-		icommands := 1  
+		icommands := 1
 		for icommands < len(commands) {
 			//fmt.Println(string(commands[icommands]))
-			args = append(args,string(commands[icommands]))
+			args = append(args, string(commands[icommands]))
 			icommands++
 		}
 		cmd := exec.Command(string(commands[0]), args...)
@@ -1381,347 +1374,345 @@ func (s String) Execute() (String,String) {
 		}
 		return String(stdout.Bytes()[:len(stdout.Bytes())]).TrimRight("\n"), String(stderr.Bytes()[:len(stdout.Bytes())]).TrimRight("\n")
 	} else {
-		return "","no commands selected"
+		return "", "no commands selected"
 	}
-	// /bin /usr/bin if commands in there than run 
+	// /bin /usr/bin if commands in there than run
 }
 
-func (s String) Php() (String,String) {
-	var ss String = "php -r \""+s+"\""
-	return ss.Execute() 
+func (s String) Php() (String, String) {
+	var ss String = "php -r \"" + s + "\""
+	return ss.Execute()
 }
 
-func (s String) Python() (String,String) {
-	var ss String = "python -c '"+s+"'"
-	return ss.Execute() 
+func (s String) Python() (String, String) {
+	var ss String = "python -c '" + s + "'"
+	return ss.Execute()
 }
 
-func (s String) Node() (String,String) {
-	var ss String = "node -e '"+s+"'"
-	return ss.Execute() 
+func (s String) Node() (String, String) {
+	var ss String = "node -e '" + s + "'"
+	return ss.Execute()
 }
 
-func (s String) Perl() (String,String) {
-	var ss String = "perl -e '"+s+"'"
-	return ss.Execute() 
+func (s String) Perl() (String, String) {
+	var ss String = "perl -e '" + s + "'"
+	return ss.Execute()
 }
 
-func (s String) PhpFile() (String,String) {
-	var ss String = "php -f "+s
-	return ss.Execute() 
+func (s String) PhpFile() (String, String) {
+	var ss String = "php -f " + s
+	return ss.Execute()
 }
 
-func (s String) PythonFile() (String,String) {
-	var ss String = "python "+s
-	return ss.Execute() 
+func (s String) PythonFile() (String, String) {
+	var ss String = "python " + s
+	return ss.Execute()
 }
 
-func (s String) NodeFile() (String,String) {
-	var ss String = "node "+s
-	return ss.Execute() 
+func (s String) NodeFile() (String, String) {
+	var ss String = "node " + s
+	return ss.Execute()
 }
 
-func (s String) PerlFile() (String,String) {
-	var ss String = "perl "+s
-	return ss.Execute() 
+func (s String) PerlFile() (String, String) {
+	var ss String = "perl " + s
+	return ss.Execute()
 }
 
-func (s String) ParseDateLocal(format String,location String) time.Time {
+func (s String) ParseDateLocal(format String, location String) time.Time {
 	loc, err := time.LoadLocation(string(location))
 	if err != nil {
 		panic(err)
 	}
-	if (format.Contains("YY")) {
-		if (format.Contains("YYYY")) {
-			format = format.ReplaceAll("YYYY","2006")
+	if format.Contains("YY") {
+		if format.Contains("YYYY") {
+			format = format.ReplaceAll("YYYY", "2006")
 		} else {
-			format = format.ReplaceAll("YY","06")
-		}
-	}
-	
-	if (format.Contains("M")) {
-		if (format.Contains("MM")) {
-			if (format.Contains("MMM")) {
-				if (format.Contains("MMMM")){
-					format = format.ReplaceAll("MMMM","January")
-					if (format.Contains("MMM")) {
-						format = format.ReplaceAll("MMM","Jan")		 
-					}
-					if (format.Contains("MM")) {
-						format = format.ReplaceAll("MM","01")
-					}
-					if (format.Contains("M")) { 
-						format = format.ReplaceAll("M","1")
-					}			
-				} else {
-					format = format.ReplaceAll("MMM","Jan")
-					if (format.Contains("MM")) {
-						format = format.ReplaceAll("MM","01")
-					}
-					if (format.Contains("M")) {
-						format = format.ReplaceAll("M","1")
-					}
-				}
-			} else {
-				format = format.ReplaceAll("MM","01")
-				if (format.Contains("M")) {
-					format = format.ReplaceAll("M","1")
-				}
-			}
-		} else {
-			format = format.ReplaceAll("M","1")
-		}
-	}
-	
-	if (format.Contains("D")) {
-		if (format.Contains("DD")) {
-			if (format.Contains("DDD")) {
-				if (format.Contains("DDDD")){
-					format = format.ReplaceAll("DDDD","Monday")	
-					if (format.Contains("DDD")) {
-						format = format.ReplaceAll("DDD","Mon")	 
-					}
-					if (format.Contains("DD")) {
-					format = format.ReplaceAll("DD","02")
-					}
-					if (format.Contains("D")) {
-						format = format.ReplaceAll("D","2")
-					}			
-				} else {
-					format = format.ReplaceAll("DDD","Mon")
-					if (format.Contains("DD")) {
-						format = format.ReplaceAll("DD","02")
-					}
-					if (format.Contains("D")) {
-						format = format.ReplaceAll("D","2")
-					}
-				}
-			} else {
-				format = format.ReplaceAll("DD","02")
-				if (format.Contains("D")) {
-					format = format.ReplaceAll("D","2")
-				}
-			}
-		} else {
-			format = format.ReplaceAll("D","2")
+			format = format.ReplaceAll("YY", "06")
 		}
 	}
 
-	if (format.Contains("hh")) {
-		if (format.Contains("hh12")) {
-			format = format.ReplaceAll("hh12","03")
+	if format.Contains("M") {
+		if format.Contains("MM") {
+			if format.Contains("MMM") {
+				if format.Contains("MMMM") {
+					format = format.ReplaceAll("MMMM", "January")
+					if format.Contains("MMM") {
+						format = format.ReplaceAll("MMM", "Jan")
+					}
+					if format.Contains("MM") {
+						format = format.ReplaceAll("MM", "01")
+					}
+					if format.Contains("M") {
+						format = format.ReplaceAll("M", "1")
+					}
+				} else {
+					format = format.ReplaceAll("MMM", "Jan")
+					if format.Contains("MM") {
+						format = format.ReplaceAll("MM", "01")
+					}
+					if format.Contains("M") {
+						format = format.ReplaceAll("M", "1")
+					}
+				}
+			} else {
+				format = format.ReplaceAll("MM", "01")
+				if format.Contains("M") {
+					format = format.ReplaceAll("M", "1")
+				}
+			}
 		} else {
-			format = format.ReplaceAll("hh","15")
+			format = format.ReplaceAll("M", "1")
 		}
-	} 
-	if (format.Contains("h12")) {
-		format = format.ReplaceAll("h12","3")	
 	}
 
-	
-	if (format.Contains("m")) {
-		if (format.Contains("mm")) {
-			format = format.ReplaceAll("mm","04")
+	if format.Contains("D") {
+		if format.Contains("DD") {
+			if format.Contains("DDD") {
+				if format.Contains("DDDD") {
+					format = format.ReplaceAll("DDDD", "Monday")
+					if format.Contains("DDD") {
+						format = format.ReplaceAll("DDD", "Mon")
+					}
+					if format.Contains("DD") {
+						format = format.ReplaceAll("DD", "02")
+					}
+					if format.Contains("D") {
+						format = format.ReplaceAll("D", "2")
+					}
+				} else {
+					format = format.ReplaceAll("DDD", "Mon")
+					if format.Contains("DD") {
+						format = format.ReplaceAll("DD", "02")
+					}
+					if format.Contains("D") {
+						format = format.ReplaceAll("D", "2")
+					}
+				}
+			} else {
+				format = format.ReplaceAll("DD", "02")
+				if format.Contains("D") {
+					format = format.ReplaceAll("D", "2")
+				}
+			}
 		} else {
-			format = format.ReplaceAll("m","4")
+			format = format.ReplaceAll("D", "2")
 		}
 	}
-	
-	if (format.Contains("s")) {
-		if (format.Contains("ss")) {
-			format = format.ReplaceAll("ss","05")
+
+	if format.Contains("hh") {
+		if format.Contains("hh12") {
+			format = format.ReplaceAll("hh12", "03")
 		} else {
-			format = format.ReplaceAll("s","5")
+			format = format.ReplaceAll("hh", "15")
 		}
 	}
-	
-	if (format.Contains("Z")) {
-		if (format.Contains("-ZZ")) {
-			if (format.Contains("-ZZZ")) {
-				format = format.ReplaceAll("-ZZZ","-070000")
+	if format.Contains("h12") {
+		format = format.ReplaceAll("h12", "3")
+	}
+
+	if format.Contains("m") {
+		if format.Contains("mm") {
+			format = format.ReplaceAll("mm", "04")
+		} else {
+			format = format.ReplaceAll("m", "4")
+		}
+	}
+
+	if format.Contains("s") {
+		if format.Contains("ss") {
+			format = format.ReplaceAll("ss", "05")
+		} else {
+			format = format.ReplaceAll("s", "5")
+		}
+	}
+
+	if format.Contains("Z") {
+		if format.Contains("-ZZ") {
+			if format.Contains("-ZZZ") {
+				format = format.ReplaceAll("-ZZZ", "-070000")
 			} else {
-				format = format.ReplaceAll("-ZZ","-0700")	
+				format = format.ReplaceAll("-ZZ", "-0700")
 			}
-		} else if (format.Contains("-Z:Z")) {
-			if (format.Contains("-Z:Z:Z")) {
-				format = format.ReplaceAll("-Z:Z:Z","-07:00:00")
+		} else if format.Contains("-Z:Z") {
+			if format.Contains("-Z:Z:Z") {
+				format = format.ReplaceAll("-Z:Z:Z", "-07:00:00")
 			} else {
-				format = format.ReplaceAll("-Z:Z","-07:00")	
+				format = format.ReplaceAll("-Z:Z", "-07:00")
 			}
-		} else if (format.Contains("ZZ")) {
-			if (format.Contains("ZZZ")) {
-				format = format.ReplaceAll("ZZZ","Z070000")
+		} else if format.Contains("ZZ") {
+			if format.Contains("ZZZ") {
+				format = format.ReplaceAll("ZZZ", "Z070000")
 			} else {
-				format = format.ReplaceAll("ZZ","Z0700")	
+				format = format.ReplaceAll("ZZ", "Z0700")
 			}
-		} else if (format.Contains("Z:Z")) {
-			if (format.Contains("Z:Z:Z")) {
-				format = format.ReplaceAll("Z:Z:Z","Z07:00:00")
+		} else if format.Contains("Z:Z") {
+			if format.Contains("Z:Z:Z") {
+				format = format.ReplaceAll("Z:Z:Z", "Z07:00:00")
 			} else {
-				format = format.ReplaceAll("Z:Z","Z07:00")	
+				format = format.ReplaceAll("Z:Z", "Z07:00")
 			}
-		} else if (format.Contains("-Z")) {
-			format = format.ReplaceAll("-Z","-07")
-		} else if (format.Contains("Z")) {
-			format = format.ReplaceAll("Z","Z07")
+		} else if format.Contains("-Z") {
+			format = format.ReplaceAll("-Z", "-07")
+		} else if format.Contains("Z") {
+			format = format.ReplaceAll("Z", "Z07")
 		}
 
 	}
 	//fmt.Println(format)
-	timee,err := time.ParseInLocation(string(format), string(s),loc)
+	timee, err := time.ParseInLocation(string(format), string(s), loc)
 
 	if err != nil {
 		panic(err)
 	}
 
-	return timee 
+	return timee
 }
 
 func (s String) ParseDate(format String) time.Time {
-	if (format.Contains("YY")) {
-		if (format.Contains("YYYY")) {
-			format = format.ReplaceAll("YYYY","2006")
+	if format.Contains("YY") {
+		if format.Contains("YYYY") {
+			format = format.ReplaceAll("YYYY", "2006")
 		} else {
-			format = format.ReplaceAll("YY","06")
-		}
-	}
-	
-	if (format.Contains("M")) {
-		if (format.Contains("MM")) {
-			if (format.Contains("MMM")) {
-				if (format.Contains("MMMM")){
-					format = format.ReplaceAll("MMMM","January")
-					if (format.Contains("MMM")) {
-						format = format.ReplaceAll("MMM","Jan")		 
-					}
-					if (format.Contains("MM")) {
-						format = format.ReplaceAll("MM","01")
-					}
-					if (format.Contains("M")) { 
-						format = format.ReplaceAll("M","1")
-					}			
-				} else {
-					format = format.ReplaceAll("MMM","Jan")
-					if (format.Contains("MM")) {
-						format = format.ReplaceAll("MM","01")
-					}
-					if (format.Contains("M")) {
-						format = format.ReplaceAll("M","1")
-					}
-				}
-			} else {
-				format = format.ReplaceAll("MM","01")
-				if (format.Contains("M")) {
-					format = format.ReplaceAll("M","1")
-				}
-			}
-		} else {
-			format = format.ReplaceAll("M","1")
-		}
-	}
-	
-	if (format.Contains("D")) {
-		if (format.Contains("DD")) {
-			if (format.Contains("DDD")) {
-				if (format.Contains("DDDD")){
-					format = format.ReplaceAll("DDDD","Monday")	
-					if (format.Contains("DDD")) {
-						format = format.ReplaceAll("DDD","Mon")	 
-					}
-					if (format.Contains("DD")) {
-					format = format.ReplaceAll("DD","02")
-					}
-					if (format.Contains("D")) {
-						format = format.ReplaceAll("D","2")
-					}			
-				} else {
-					format = format.ReplaceAll("DDD","Mon")
-					if (format.Contains("DD")) {
-						format = format.ReplaceAll("DD","02")
-					}
-					if (format.Contains("D")) {
-						format = format.ReplaceAll("D","2")
-					}
-				}
-			} else {
-				format = format.ReplaceAll("DD","02")
-				if (format.Contains("D")) {
-					format = format.ReplaceAll("D","2")
-				}
-			}
-		} else {
-			format = format.ReplaceAll("D","2")
+			format = format.ReplaceAll("YY", "06")
 		}
 	}
 
-	if (format.Contains("hh")) {
-		if (format.Contains("hh12")) {
-			format = format.ReplaceAll("hh12","03")
+	if format.Contains("M") {
+		if format.Contains("MM") {
+			if format.Contains("MMM") {
+				if format.Contains("MMMM") {
+					format = format.ReplaceAll("MMMM", "January")
+					if format.Contains("MMM") {
+						format = format.ReplaceAll("MMM", "Jan")
+					}
+					if format.Contains("MM") {
+						format = format.ReplaceAll("MM", "01")
+					}
+					if format.Contains("M") {
+						format = format.ReplaceAll("M", "1")
+					}
+				} else {
+					format = format.ReplaceAll("MMM", "Jan")
+					if format.Contains("MM") {
+						format = format.ReplaceAll("MM", "01")
+					}
+					if format.Contains("M") {
+						format = format.ReplaceAll("M", "1")
+					}
+				}
+			} else {
+				format = format.ReplaceAll("MM", "01")
+				if format.Contains("M") {
+					format = format.ReplaceAll("M", "1")
+				}
+			}
 		} else {
-			format = format.ReplaceAll("hh","15")
+			format = format.ReplaceAll("M", "1")
 		}
-	} 
-	if (format.Contains("h12")) {
-		format = format.ReplaceAll("h12","3")	
 	}
 
-	
-	if (format.Contains("m")) {
-		if (format.Contains("mm")) {
-			format = format.ReplaceAll("mm","04")
+	if format.Contains("D") {
+		if format.Contains("DD") {
+			if format.Contains("DDD") {
+				if format.Contains("DDDD") {
+					format = format.ReplaceAll("DDDD", "Monday")
+					if format.Contains("DDD") {
+						format = format.ReplaceAll("DDD", "Mon")
+					}
+					if format.Contains("DD") {
+						format = format.ReplaceAll("DD", "02")
+					}
+					if format.Contains("D") {
+						format = format.ReplaceAll("D", "2")
+					}
+				} else {
+					format = format.ReplaceAll("DDD", "Mon")
+					if format.Contains("DD") {
+						format = format.ReplaceAll("DD", "02")
+					}
+					if format.Contains("D") {
+						format = format.ReplaceAll("D", "2")
+					}
+				}
+			} else {
+				format = format.ReplaceAll("DD", "02")
+				if format.Contains("D") {
+					format = format.ReplaceAll("D", "2")
+				}
+			}
 		} else {
-			format = format.ReplaceAll("m","4")
+			format = format.ReplaceAll("D", "2")
 		}
 	}
-	
-	if (format.Contains("s")) {
-		if (format.Contains("ss")) {
-			format = format.ReplaceAll("ss","05")
+
+	if format.Contains("hh") {
+		if format.Contains("hh12") {
+			format = format.ReplaceAll("hh12", "03")
 		} else {
-			format = format.ReplaceAll("s","5")
+			format = format.ReplaceAll("hh", "15")
 		}
 	}
-	
-	if (format.Contains("Z")) {
-		if (format.Contains("-ZZ")) {
-			if (format.Contains("-ZZZ")) {
-				format = format.ReplaceAll("-ZZZ","-070000")
+	if format.Contains("h12") {
+		format = format.ReplaceAll("h12", "3")
+	}
+
+	if format.Contains("m") {
+		if format.Contains("mm") {
+			format = format.ReplaceAll("mm", "04")
+		} else {
+			format = format.ReplaceAll("m", "4")
+		}
+	}
+
+	if format.Contains("s") {
+		if format.Contains("ss") {
+			format = format.ReplaceAll("ss", "05")
+		} else {
+			format = format.ReplaceAll("s", "5")
+		}
+	}
+
+	if format.Contains("Z") {
+		if format.Contains("-ZZ") {
+			if format.Contains("-ZZZ") {
+				format = format.ReplaceAll("-ZZZ", "-070000")
 			} else {
-				format = format.ReplaceAll("-ZZ","-0700")	
+				format = format.ReplaceAll("-ZZ", "-0700")
 			}
-		} else if (format.Contains("-Z:Z")) {
-			if (format.Contains("-Z:Z:Z")) {
-				format = format.ReplaceAll("-Z:Z:Z","-07:00:00")
+		} else if format.Contains("-Z:Z") {
+			if format.Contains("-Z:Z:Z") {
+				format = format.ReplaceAll("-Z:Z:Z", "-07:00:00")
 			} else {
-				format = format.ReplaceAll("-Z:Z","-07:00")	
+				format = format.ReplaceAll("-Z:Z", "-07:00")
 			}
-		} else if (format.Contains("ZZ")) {
-			if (format.Contains("ZZZ")) {
-				format = format.ReplaceAll("ZZZ","Z070000")
+		} else if format.Contains("ZZ") {
+			if format.Contains("ZZZ") {
+				format = format.ReplaceAll("ZZZ", "Z070000")
 			} else {
-				format = format.ReplaceAll("ZZ","Z0700")	
+				format = format.ReplaceAll("ZZ", "Z0700")
 			}
-		} else if (format.Contains("Z:Z")) {
-			if (format.Contains("Z:Z:Z")) {
-				format = format.ReplaceAll("Z:Z:Z","Z07:00:00")
+		} else if format.Contains("Z:Z") {
+			if format.Contains("Z:Z:Z") {
+				format = format.ReplaceAll("Z:Z:Z", "Z07:00:00")
 			} else {
-				format = format.ReplaceAll("Z:Z","Z07:00")	
+				format = format.ReplaceAll("Z:Z", "Z07:00")
 			}
-		} else if (format.Contains("-Z")) {
-			format = format.ReplaceAll("-Z","-07")
-		} else if (format.Contains("Z")) {
-			format = format.ReplaceAll("Z","Z07")
+		} else if format.Contains("-Z") {
+			format = format.ReplaceAll("-Z", "-07")
+		} else if format.Contains("Z") {
+			format = format.ReplaceAll("Z", "Z07")
 		}
 
 	}
 	//fmt.Println(format)
-	timee,err := time.Parse(string(format), string(s))
+	timee, err := time.Parse(string(format), string(s))
 
 	if err != nil {
 		panic(err)
 	}
 
-	return timee 
+	return timee
 }
 
 func (s String) Int() int {
@@ -1733,7 +1724,7 @@ func (s String) Int() int {
 }
 
 func (s String) Int32() int32 {
-	i, err :=  strconv.ParseInt(string(s), 10, 32);
+	i, err := strconv.ParseInt(string(s), 10, 32)
 	if err != nil {
 		panic(err)
 	}
@@ -1741,7 +1732,7 @@ func (s String) Int32() int32 {
 }
 
 func (s String) Int64() int64 {
-	i, err :=  strconv.ParseInt(string(s), 10, 64);
+	i, err := strconv.ParseInt(string(s), 10, 64)
 	if err != nil {
 		panic(err)
 	}
@@ -1749,7 +1740,7 @@ func (s String) Int64() int64 {
 }
 
 func (s String) Uint32() uint32 {
-	i, err :=  strconv.ParseUint(string(s), 10, 32);
+	i, err := strconv.ParseUint(string(s), 10, 32)
 	if err != nil {
 		panic(err)
 	}
@@ -1757,7 +1748,7 @@ func (s String) Uint32() uint32 {
 }
 
 func (s String) Uint64() uint64 {
-	i, err :=  strconv.ParseUint(string(s), 10, 64);
+	i, err := strconv.ParseUint(string(s), 10, 64)
 	if err != nil {
 		panic(err)
 	}
@@ -1773,7 +1764,7 @@ func (s String) Bool() bool {
 }
 
 func (s String) Float64() float64 {
-	f, err := strconv.ParseFloat(string(s),64)
+	f, err := strconv.ParseFloat(string(s), 64)
 	if err != nil {
 		panic(err)
 	}
@@ -1781,7 +1772,7 @@ func (s String) Float64() float64 {
 }
 
 func (s String) Float32() float32 {
-	f, err := strconv.ParseFloat(string(s),32)
+	f, err := strconv.ParseFloat(string(s), 32)
 	if err != nil {
 		panic(err)
 	}
@@ -1789,7 +1780,7 @@ func (s String) Float32() float32 {
 }
 
 func (s String) Uint() uint {
-	u, err := strconv.ParseUint(string(s),10,64)
+	u, err := strconv.ParseUint(string(s), 10, 64)
 	if err != nil {
 		panic(err)
 	}
@@ -1798,28 +1789,28 @@ func (s String) Uint() uint {
 
 func (s String) StripTags() String {
 	var strippedstring String = ""
-	var i = 0 
-	var iold = 0 
+	var i = 0
+	var iold = 0
 	var ommittext = false
 	for _, char := range s {
-		if (char == '<') {
-			if (ommittext == false) {
-				strippedstring+=s.substr(iold,i-iold)
+		if char == '<' {
+			if ommittext == false {
+				strippedstring += s.substr(iold, i-iold)
 			}
-			if (s.substr(i,7)=="<script" || s.substr(i,6)=="<style"){
+			if s.substr(i, 7) == "<script" || s.substr(i, 6) == "<style" {
 				ommittext = true
 			}
-			if (ommittext == true) {
-				iold = i+1
+			if ommittext == true {
+				iold = i + 1
 			}
 		}
-		if (char == '>') {
+		if char == '>' {
 			//fmt.Println(s.substr(i-8,8))
 			//fmt.Println(s.substr(i-7,7))
-			if (s.substr(i-7,8)=="/script>" || s.substr(i-6,7)=="/style>"){
+			if s.substr(i-7, 8) == "/script>" || s.substr(i-6, 7) == "/style>" {
 				ommittext = false
 			}
-			iold = i+1 
+			iold = i + 1
 		}
 		i++
 	}
@@ -1833,16 +1824,16 @@ func (s String) Find(substring String) int {
 func (s String) FindAll(substring String) []int {
 	ilength := len(s)
 	i := 0
-	var intarr []int 
-	for (i<ilength) {
-		is := s.substr(i,ilength-i).Index(substring)
+	var intarr []int
+	for i < ilength {
+		is := s.substr(i, ilength-i).Index(substring)
 		//fmt.Println(i)
 		//fmt.Println("is")
 		//fmt.Println(is)
-		if (is == -1){
-			i=ilength
+		if is == -1 {
+			i = ilength
 		} else {
-			i = i+is
+			i = i + is
 			intarr = append(intarr, i)
 		}
 		i++
@@ -1851,18 +1842,18 @@ func (s String) FindAll(substring String) []int {
 }
 
 func (s String) Left(length int) String {
-	return s.substr(0,length)
+	return s.substr(0, length)
 }
 
 func (s String) Right(length int) String {
-	return s.substr(len(s)-length,length)
+	return s.substr(len(s)-length, length)
 }
 
 func (s String) Reverse() String {
-	i:=len(s)-1
+	i := len(s) - 1
 	var ss String = ""
 	for i >= 0 {
-		ss += s.substr(i,1)
+		ss += s.substr(i, 1)
 		i--
 	}
 	return ss
@@ -1873,44 +1864,44 @@ type Strint struct {
 	v int
 }
 
-func cout (a ...interface{}){
+func cout(a ...interface{}) {
 	fmt.Println(a...)
 }
 
 func (s String) WordCount() map[String]int {
 	m := make(map[String]int)
 	arr := s.Split(" ")
-	i := 0 
+	i := 0
 	arrlen := len(arr)
-	msort := []Strint{} 
+	msort := []Strint{}
 	isort := 0
 	for i < arrlen {
 		arri := arr[i]
 		isort = 0
-		lenmsort := len(msort) 
+		lenmsort := len(msort)
 		if lenmsort == 0 {
 			mmsort := Strint{arri, 1}
-			msort = append(msort,mmsort)
+			msort = append(msort, mmsort)
 			//fmt.Println(msort)
 		} else {
 			isort = 0
 			found := false
-			for isort < lenmsort{
+			for isort < lenmsort {
 				if arri == msort[isort].s {
 					found = true
-					msort[isort].v++ 
-				} 
+					msort[isort].v++
+				}
 				isort++
 			}
 			if found == false {
 				mmsort := Strint{arri, 1}
-				msort = append(msort,mmsort)
+				msort = append(msort, mmsort)
 				//fmt.Println(msort)
 			}
 		}
-		i++ 
-	}	
-	
+		i++
+	}
+
 	// Sort by age, keeping original order or equal elements.
 	sort.SliceStable(msort, func(i, j int) bool {
 		return msort[i].v > msort[j].v
@@ -1923,7 +1914,7 @@ func (s String) WordCount() map[String]int {
 	}*/
 	m = make(map[String]int)
 	//cout(len(msort))
-	i = 0 
+	i = 0
 	for i < len(msort) {
 		m[msort[i].s] = msort[i].v
 		i++
@@ -1933,15 +1924,15 @@ func (s String) WordCount() map[String]int {
 }
 
 const RandomStringCharset = "abcdefghijklmnopqrstuvwxyz" +
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-  var RandomStringseededRand *mrand.Rand = mrand.New(
+var RandomStringseededRand *mrand.Rand = mrand.New(
 	mrand.NewSource(time.Now().UnixNano()))
 
 func StringWithCharset(length int, charset string) string {
 	b := make([]byte, length)
 	for i := range b {
-	  b[i] = charset[RandomStringseededRand.Intn(len(charset))]
+		b[i] = charset[RandomStringseededRand.Intn(len(charset))]
 	}
 	return string(b)
 }
@@ -1963,8 +1954,8 @@ func (s String) AddRight(ss String) String {
 	return s + ss
 }
 
-func (s String) AddPos(ss String,pos int) String {
-	return s.substr(0,pos) + ss + s.substr(pos,s.len()-pos)
+func (s String) AddPos(ss String, pos int) String {
+	return s.substr(0, pos) + ss + s.substr(pos, s.len()-pos)
 }
 
 func (s String) FindInFiles(strpath String) Strings {
@@ -1985,15 +1976,14 @@ func (s String) FindInFiles(strpath String) Strings {
 		}
 		if info.IsDir() {
 			return nil
-		} 
+		}
 		//cout("Drin")
 		//cout(path)
 		file, err := os.Open(path)
 		if err != nil {
 			//cout(err)
 			return nil
-		} else 
-		{
+		} else {
 			//cout("tiefer")
 			defer file.Close()
 			//cout("tiefer2")
@@ -2001,20 +1991,20 @@ func (s String) FindInFiles(strpath String) Strings {
 			scanner.Split(bufio.ScanLines)
 			// This is our buffer now
 			//cout("tiefer3")
-			i:=1
+			i := 1
 			for scanner.Scan() {
 				var scannertext String = String(scanner.Text())
 				scannerarr := scannertext.FindAll(s)
-				ii := 0 
+				ii := 0
 				scannerarrlen := len(scannerarr)
 				//cout(scannerarrlen)
 				for ii < scannerarrlen {
-					ss = append(ss, String(path + " - Line:" + strconv.Itoa(i) + " - Pos:" + strconv.Itoa(scannerarr[ii])))
+					ss = append(ss, String(path+" - Line:"+strconv.Itoa(i)+" - Pos:"+strconv.Itoa(scannerarr[ii])))
 					ii++
 				}
 				i++
 			}
-		}	
+		}
 		return nil
 	})
 	if e != nil {
@@ -2024,7 +2014,7 @@ func (s String) FindInFiles(strpath String) Strings {
 	return ss
 }
 
-// Starting Strings section 
+// Starting Strings section
 func (s Strings) len() int {
 	return len(s)
 }
@@ -2032,29 +2022,29 @@ func (s Strings) len() int {
 func (arrs Strings) Filter(test func(String) bool) Strings {
 	var ret Strings
 	for _, s := range arrs {
-        if test(s) {
-            ret = append(ret, s)
-        }
-    }
-    return ret
+		if test(s) {
+			ret = append(ret, s)
+		}
+	}
+	return ret
 }
 
 func (s Strings) substr(start, end int) Strings {
-	for i, _ := range s {
-		s[i] = s[i].substr(start,end)
+	for i := range s {
+		s[i] = s[i].substr(start, end)
 	}
 	return s
 }
 
 func (s Strings) ASCIIsubstr(start, end int) Strings {
-	for i, _ := range s {
-		s[i] = s[i].ASCIIsubstr(start,end)
+	for i := range s {
+		s[i] = s[i].ASCIIsubstr(start, end)
 	}
 	return s
 }
 
 func (s Strings) Compare(ss Strings) bool {
-	b := reflect.DeepEqual(s,ss)
+	b := reflect.DeepEqual(s, ss)
 	return b
 }
 
@@ -2062,7 +2052,7 @@ func (s Strings) Contains(ss String) []bool {
 	var sss []bool
 	for _, val := range s {
 		ii := val.Contains(ss)
-		sss = append(sss,ii)
+		sss = append(sss, ii)
 	}
 	return sss
 }
@@ -2071,7 +2061,7 @@ func (s Strings) ContainsFilter(ss String) Strings {
 	var sss Strings
 	for _, val := range s {
 		if val.Contains(ss) {
-			sss = append(sss,val)
+			sss = append(sss, val)
 		}
 	}
 	return sss
@@ -2081,7 +2071,7 @@ func (s Strings) ContainsAny(chars String) []int {
 	var sss []int
 	for _, val := range s {
 		ii := val.ContainsAny(chars)
-		sss = append(sss,ii)
+		sss = append(sss, ii)
 	}
 	return sss
 }
@@ -2090,7 +2080,7 @@ func (s Strings) ContainsRune(r rune) []bool {
 	var sss []bool
 	for _, val := range s {
 		ii := val.ContainsRune(r)
-		sss = append(sss,ii)
+		sss = append(sss, ii)
 	}
 	return sss
 }
@@ -2099,7 +2089,7 @@ func (s Strings) ContainsRuneFilter(r rune) Strings {
 	var sss Strings
 	for _, val := range s {
 		if val.ContainsRune(r) {
-			sss = append(sss,val)
+			sss = append(sss, val)
 		}
 	}
 	return sss
@@ -2109,7 +2099,7 @@ func (s Strings) Count(substr String) []int {
 	var sss []int
 	for _, val := range s {
 		ii := val.Count(substr)
-		sss = append(sss,ii)
+		sss = append(sss, ii)
 	}
 	return sss
 }
@@ -2122,7 +2112,6 @@ func (s Strings) Count(substr String) []int {
 	}
 	return sss
 }*/
-
 
 /*func (s Strings) FieldsFunc(f func(rune) bool) map[String]Strings {
 	sss := make(map[String]Strings)
@@ -2137,7 +2126,7 @@ func (s Strings) HasPrefix(ss String) []bool {
 	var sss []bool
 	for _, val := range s {
 		ii := val.HasPrefix(ss)
-		sss = append(sss,ii)
+		sss = append(sss, ii)
 	}
 	return sss
 }
@@ -2146,7 +2135,7 @@ func (s Strings) HasPrefixFilter(ss String) Strings {
 	var sss Strings
 	for _, val := range s {
 		if val.HasPrefix(ss) {
-			sss = append(sss,val)
+			sss = append(sss, val)
 		}
 	}
 	return sss
@@ -2156,7 +2145,7 @@ func (s Strings) HasSuffix(ss String) []bool {
 	var sss []bool
 	for _, val := range s {
 		ii := val.HasSuffix(ss)
-		sss = append(sss,ii)
+		sss = append(sss, ii)
 	}
 	return sss
 }
@@ -2165,7 +2154,7 @@ func (s Strings) HasSuffixFilter(ss String) Strings {
 	var sss Strings
 	for _, val := range s {
 		if val.HasSuffix(ss) {
-			sss = append(sss,val)
+			sss = append(sss, val)
 		}
 	}
 	return sss
@@ -2175,16 +2164,14 @@ func (s Strings) Index(ss String) []bool {
 	var sss []bool
 	for _, val := range s {
 		ii := val.HasSuffix(ss)
-		sss = append(sss,ii)
+		sss = append(sss, ii)
 	}
 	return sss
 }
 
+// Is EasyFormat easy regex alternative which hits in 98% of cases function like cCS d or {?}{c}{C}{S}{d}{d}-{d}{d}{d}
 
-
-// Is EasyFormat easy regex alternative which hits in 98% of cases function like cCS d or {?}{c}{C}{S}{d}{d}-{d}{d}{d} 
-
-//Sorter needs to be much simpler 
+//Sorter needs to be much simpler
 /*package main
 
 import "fmt"
@@ -2232,33 +2219,31 @@ func (vs *ValSorter) Swap(i, j int) {
         vs.Keys[i], vs.Keys[j] = vs.Keys[j], vs.Keys[i]
 }*/
 
-
-
 // Crypto Library String sha128 usw. easy obfuscating like 3 + byte or -1 byte
-// file get contents url and path 
-// Find statt Index und FindALL => Array Find in Files 
+// file get contents url and path
+// Find statt Index und FindALL => Array Find in Files
 // base 64 encode decode
 // POST String to adress => POST Function optional headerobject
 // GET(paramname, url, optional headerobject)
 // fileputcontents
 // Execute() => in shell return []String rows
-// striptags 
+// striptags
 // Perhaps not Publish(path, port, domain, opt ssl, opt ssl key, opt ssl ) on path and port => Server
 // .JSON => Parse to JSON array
-// Strings=>Array=>sort function 
+// Strings=>Array=>sort function
 // .countWords to array
 // .stripall but numbers and charatcers and -_
 // .strip(String[] to strip) or ReplaceAllArray
-// fileputContents newline every .2x. sep 
-// RunIn() => Python, php, perl, c, c++, nodejs, => commands php() nodejs() perl() c() c++() python() 
+// fileputContents newline every .2x. sep
+// RunIn() => Python, php, perl, c, c++, nodejs, => commands php() nodejs() perl() c() c++() python()
 // .Date => parse to date evtl. with format() => standard "YYYY-MM-DD"
 // .Int
 // .Double
-// Perhaps free Type-Cast possible? 
-// .pushTo([]String) 
+// Perhaps free Type-Cast possible?
+// .pushTo([]String)
 // Do all commands to all elements in array perhaps with condition
 
-//Strings Array Functions 
-// DISTINCT 
+//Strings Array Functions
+// DISTINCT
 // GROUPCOUNT
 // Filter
