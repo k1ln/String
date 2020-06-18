@@ -105,9 +105,8 @@ Generates a md5 String out of provided String.
 ```
 var s String = "The fog is getting thicker!And Leon's getting laaarger!"
 var b = s.Md5();
-
 ```
-*b=e2c569be17396eca2a2e3c11578123ed*
+*result: b="e2c569be17396eca2a2e3c11578123ed"*
 
 ### **Sha1() String**
 Generates a sha1 String out of provided String.
