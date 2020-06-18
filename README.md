@@ -17,7 +17,12 @@ bl := strings.Contains(s,"s")
 
 like in javascript for example. And i saw that String handling in go is not very comfortable. You need to do a lot of things yourself what could be normal for a C developer but feels odd if you come from a javascript/php background. There are scenarios where an Object-Oriented approach is favorable in comparison to a functional one. 
 
-It feels more natural "to me" to use the function after the String the function uses. Readibility "for me" is much better like this. I benchmarked all fuctions in comparison from object-oriented to functional approach and didn't encounter any major performance deficits. You can run the benchmarks yourself.
+It feels more natural "to me" to use the function after the String the function uses. Readibility "for me" is much better like this. I benchmarked all fuctions in comparison from object-oriented to functional approach and didn't encounter any major performance deficits. You can run the benchmarks yourself:
+
+```
+go test -bench=.
+```
+
 
 **All functions from the golang "strings" package were added.** 
 
