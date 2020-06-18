@@ -92,10 +92,15 @@ ss: double digit seconds
 9 stays for milliseconds
 
 Z as golang Z07
+
 ZZ as golang Z0700
+
 ZZZ as golang Z070000
+
 Z:Z as golang Z07:00
+
 Z:Z:Z as golang Z07:00:00
+
 
 if you need a minus before the Z's just add one.
 
