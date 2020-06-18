@@ -4421,7 +4421,7 @@ func Test_String_AddPos(t *testing.T) {
 		})
 	}
 }
-
+/*
 func Test_String_FindInFiles(t *testing.T) {
 	type args struct {
 		s    String
@@ -4469,7 +4469,7 @@ func Test_String_FindInFiles(t *testing.T) {
 		})
 	}
 }
-
+*/
 func Test_Strings_substr(t *testing.T) {
 	type args struct {
 		s     Strings
