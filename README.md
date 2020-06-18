@@ -70,54 +70,54 @@ Parses local date string into time with normally used syntax:
 
 __*YY*__: last two digits of year.
 
-*YYYY*: full Year.
+__*YYYY*__: full Year.
 
 
-*M*: 1 digit month.
+__*M*__: 1 digit month.
 
-*MM*: two digit month.
+__*MM*__: two digit month.
 
-*MMM*: three letter month.
+__*MMM*__: three letter month.
 
-*MMMM*: full name month 
-
-
-*D*: 1 digit day.
-
-*DD*: two digit day.
-
-*DDD*: three letter day.
-
-*DDDD*: full name day.
+__*MMMM*__: full name month 
 
 
-*hh*: hours 24 
+__*D*__: 1 digit day.
 
-*hh12*: hours 12 
+__*DD*__: two digit day.
 
+__*DDD*__: three letter day.
 
-*m*: single digit minutes
-
-*mm*: double digit minutes
-
-
-*s*: single digit seconds
-
-*ss*: double digit seconds 
+__*DDDD*__: full name day.
 
 
-*9* stays for milliseconds
+__*hh*__: hours 24 
+
+__*hh12*__: hours 12 
 
 
-*Z* as golang Z07
+__*m*__: single digit minutes
 
-*ZZ* as golang Z0700
+__*mm*__: double digit minutes
 
-*ZZZ* as golang Z070000
 
-*Z:Z* as golang Z07:00
+__*s*__: single digit seconds
 
-*Z:Z:Z* as golang Z07:00:00
+__*ss*__: double digit seconds 
+
+
+__*9*__ stays for milliseconds
+
+
+__*Z*__ as golang Z07
+
+__*ZZ*__ as golang Z0700
+
+__*ZZZ*__ as golang Z070000
+
+__*Z:Z*__ as golang Z07:00
+
+__*Z:Z:Z*__ as golang Z07:00:00
 
 
 if you need a minus before the Z's just add one.
