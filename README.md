@@ -320,48 +320,122 @@ bl = pw.PwSpecialCase(2)
 
 ### **PwLowerCase(number int) bool**
 Checks if String contains number of lowercases.
+```
+var pw String = "PwLOWERcASE"
+bl = pw.PwSpecialCase(2)
+```
+*result: bl=true*
 
 ### **Get() String**
-Get contents of a url adress. 
+Get contents of a url address.
+```
+var url String = "http://google.de"
+s := url.Get()
+```
 
 ### **Json() map[String]interface{}**
 A very basic JSON parse function of a String. But there is something TODO here so better write your own. Only for very basic usage. 
 
 ### **Open() String**
-Open File from provided String path and return String on file. 
+Open File from provided String path and return String of file. 
+```
+var path String = "/home/user/text.txt"
+s := path.Open()
+```
 
 ### **Exists() bool**
 Checks if String of path exists as url or exists as path on the system.
+```
+var path String = "/home/user/text.txt"
+bl := path.Exists()
+```
+*result: bl=true*
+
+```
+var path String = "https://google.de"
+bl := path.Exists()
+```
+*result: bl=true*
+
 
 ### **GetContents() String**
 Get String contents of file or url adress provided. 
 
 ### **WriteToFile(path String)**
 Write String to provided path as file. 
+```
+var str String = "Put this text into a file"
+str.WriteToFile("/home/user/testfile.txt")
+```
 
 ### **URLEncode() String**
 Encode String in URL-Format => Similar to Query Escape.
+```
+var str String = "uzgdauzgduaszd$&%$&%$&%$"
+encoded := str.URLEncode()
+```
+*result: encoded=uzgdauzgduaszd%24%26%25%24%26%25%24%26%25%24*
 
 ### **URLDecode() String**
 Decode URL-encoded String.
+```
+var str String = "uzgdauzgduaszd%24%26%25%24%26%25%24%26%25%24"
+encoded := str.URLEncode()
+```
+*result: encoded=uzgdauzgduaszd$&%$&%$&%$*
 
 ### **Post(url String, contenttype String) String**
 Basic Post with contenttype. 
+```
+var str String = "{\"name\":\"K\"}"
+var url := "http://httpbin.org/post"
+var contenttype := "application/json"
+str.Post(url,contenttype)
+
+```
+
 
 ### **Execute() (String,String)**
 Executes a command in command line. Returns result in first String and error in second String.
+```
+var str String = "echo \"Dies +&& Jenes das\" \"bla&&\""
+result,err := str.Execute()
+```
+*result="Dies +&& Jenes das bla&&"*
 
 ### **Php() (String,String)**
 Run String as php code and get result, error Strings back. You need php-cli installed.
+```
+var str String = "echo 'hello';"
+result,err := str.Php()
+```
+*result="hello*
 
 ### **Python() (String,String)**
 Run String in Python if Python installed. Returns result,error. 
+```
+var str String = "print(\"hello\")"
+result,err := str.Python()
+```
+*result="hello*
 
 ### **Node() (String,String)**
 Run String in nodejs if nodejs is installed. Returns result,error.
+```
+var str String = "console.log(\"hello\")"
+result,err := str.Node()
+```
+*result="hello*
+
 
 ### **Perl() (String,String)**
 Run String in Perl if installed. Returns result,error.
+```
+var str String = "print \"hello\";"
+result,err := str.Node()
+```
+*result="hello*
+
 
 ### **PhpFile() (String,String)**
 Run php file provided as path in String. Returns result,error.
@@ -377,6 +451,11 @@ Run perl file provided as path in String. Returns result,error.
 
 ### **Int() int**
 Converts String to int.
+```
+var str String = "12345"
+i := str.Int()
+```
+*result: i=12345
 
 ### **Int32() int32**
 Converts String to Int32.
@@ -392,6 +471,11 @@ Converts String to uint64.
 
 ### **Bool() bool** 
 Converts String to bool.
+```
+var str String = "true"
+bl := str.Bool()
+```
+*result: bl=true
 
 ### **Float64() float64**
 Converts String to float64. 
@@ -404,15 +488,32 @@ Converts String to uint.
 
 ### **StripTags() String**
 Strips HTML-Tags from String. 
+```
+var str String = "<html><body>This is some text in the body</body></html>"
+str = str.StripTags()
+```
+*result: str="This is some text in the body"
+
 
 ### **Find(substring String) int**
 Find first appearance of substring in String.
+```
+var str String = "hello world"
+ifind := str.Find("world")
+```
+*result: ifind=6
 
 ### **FindAll(substring String) []int**
 Find all appearances of substring in String.
+```
+var str String = "hello world world wrold world"
+ifindarr := str.FindAll("world")
+```
+*result: ifindarr=[]int{6, 12, 24}
 
 ### **Left(length int) String**
 Get number of characters from the left of String.
+
 
 ### **Right(length int) String**
 Get number of characters from the right of String.
