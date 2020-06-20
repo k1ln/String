@@ -579,5 +579,8 @@ str = str.AddPos("the one and only ",7)
 
 ### **FindInFiles(strpath String) Strings**
 Search for String in all files provided by path.
-
+```
+var str String = "needle"
+str = str.AddPos("/home/user/haystackfiles")
+```
 
