@@ -513,29 +513,71 @@ ifindarr := str.FindAll("world")
 
 ### **Left(length int) String**
 Get number of characters from the left of String.
-
+```
+var str String = "hello world"
+left := str.Left(4)
+```
+*result: left="hell"
 
 ### **Right(length int) String**
 Get number of characters from the right of String.
+```
+var str String = "hello world"
+right := str.Right(4)
+```
+*result: right="orld"
 
 ### **Reverse() String**
 Reverse the String. Why in the world you want that but you can do it. 
+```
+var str String = "Kilian"
+reverse := str.Reverse()
+```
+*result: reverse="nailiK"
 
 ### **WordCount() map[String]int**
 Count all Words in a String and return as ordered map.
+```
+var str String = "the the new new of da new the du new the of the of du"
+arr := str.WordCount()
+```
+*result: arr=map[String]int{"the": 5, "new": 4, "of": 3, "du": 2, "da": 1}
+
 
 ### **RandomString(length int) String**
-Genrate a random String of length length.
+Genrate a random String of length length. From seed "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+```
+var str String 
+randomstr := str.RandomString(12)
+```
 
 ### **AddLeft(ss String) String**
 Add String to Left of String.
+```
+var str String = "world"
+str = str.AddLeft("hello ")
+```
+*result: str="hello world"
 
 ### **AddRight(ss String) String**
 Add String right of String.
 
+```
+var str String = "hello "
+str = str.AddRight("world")
+```
+*result: str="hello world"
+
 ### **AddPos(ss String,pos int) String**
-Add ss String to String at position po.
+Add ss String to String at position pos.
+
+```
+var str String = "Kilian Hertel"
+str = str.AddPos("the one and only ",7)
+```
+*result: str="Kilian the one and only Hertel"
 
 ### **FindInFiles(strpath String) Strings**
 Search for String in all files provided by path.
+
 
