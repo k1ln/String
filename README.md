@@ -572,10 +572,10 @@ str = str.AddRight("world")
 Add ss String to String at position pos.
 
 ```
-var str String = "Kilian Hertel"
-str = str.AddPos("the one and only ",7)
+var str String = "Elvis Presley"
+str = str.AddPos("the one and only ",6)
 ```
-*result: str="Kilian the one and only Hertel"
+*result: str="Elvis the one and only Presley"
 
 ### **FindInFiles(strpath String) Strings**
 Search for String in all files provided by path.
