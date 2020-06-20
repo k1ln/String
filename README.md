@@ -232,30 +232,75 @@ bl = ip.IsIpV4()
 
 ### **IsIpV6() bool**
 Checks if String is an IPV6 network adress.
+```
+var ip String = "2a0a:a545:1728:0:1cb9:a3a8:42e1:d9ca"
+bl = ip.IsIpV6()
+```
+*result: bl=true*
 
 ### **IsIp() bool** 
-Checks if String is ip adress.
+Checks if String is ip adress no matter if ipv4 or ipv6.
 
 ### **IsHtmlTag() bool** 
 Checks if String is an html tag. 
+Checks if String is an IPV6 network adress.
+```
+var tag String = "<html>"
+bl = ip.IsHtmlTag()
+```
+*result: bl=true*
 
 ### **IsPhoneNumber() bool**
 Checks if String is a phone number. 
+```
+var phonenumber String = "01776374859663"
+bl = phonenumber.IsHtmlTag()
+```
+*result: bl=true*
 
 ### **IsFilePath() bool**
 Checks if String is a filepath. 
+```
+var path String = "/home/user/go"
+bl = path.IsFilePath()
+```
+*result: bl=true*
 
 ### **IsUserName (min int, max int) bool**
 Checks if String is a valid user name with min and max number of characters.
+```
+var user String = "k1ln"
+bl = user.IsUserName(5,8)
+```
+*result: bl=false*
 
 ### **IsZipCode(country String) bool**
 Checks if String is ZipCode of provided country. Country should be provided in the countrycode-format => "DE => Germany, US => USA, FR => France etc..
 
+```
+var zip String = "50968"
+bl = zip.IsZipCode("DE")
+```
+*result: bl=true*
+
 ### **IsIban(country String) bool**
 Checks if String is correct IBAN-Format doesn't check for 2-check digits at the beginning. Perhaps will add this in the future. Use country code for country like in IsZipCode.
 
+```
+var iban String = "DE89370400440532013000"
+bl = iban.IsIban("DE")
+```
+*result: bl=true*
+
 ### **PwUpperCase (number int) bool**
 Checks if String contains number of uppercases.
+
+```
+var pw String = "PassWord"
+bl = pw.PwUpperCase(2)
+```
+*result: bl=true*
+
 
 ### **PwSpecialCase(number int) bool**
 Checks if String contains number of special cases.
