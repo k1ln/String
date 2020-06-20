@@ -49,10 +49,16 @@ otherwise you have to write "String." in front of all declarations which is not 
 
 String (Big capital S) is of type string so you can do anything with it you can do with a string. + and [] work as expected. If you want to use it with other functions don't forget to change the variable type before with string() or s.Tostring().
 
-Functions which are not part of the main golang strings package but add to the functionality and comfort functions were only tested on Linux:
+Functions which are not part of the main golang strings package but add to the functionality and comfort. Functions were only tested on Linux:
 
 ### **Substr(start, end int) String**
 A normal substring function utf-8 compatible. 
+```
+var s String = "Hello world!"
+var ss = s.Substr(3,5);
+```
+*result: ss="lo wo"*
+
 
 ### **ASCIIsubstr(start, end int) String**
 Same as subtring but only for ASCII Strings => is much faster if you only use ASCII.
@@ -134,33 +140,95 @@ var b = s.Md5();
 
 ### **Sha1() String**
 Generates a sha1 String out of provided String.
+```
+var s String = "This is an example sentence!"
+var b = s.Sha1();
+```
+*result: b="8b7d314a11b489238e9c8f07b117830b0e823a4a"*
 
 ### **AesEncrypt(key String) String**
-Creates an  Aes Encrypted String with provided key. Uses CTR as encryption algorithm.
+Creates an  Aes Encrypted String with provided key. Uses CTR as encryption algorith. 
+
+####128-bit:####
+```
+var s String = "Be good to people and people will be good to you"
+s = s.AesEncrypt("52cb693d7e8ff8fecb2d9bee9653954b");
+s = s.AesDecrypt("52cb693d7e8ff8fecb2d9bee9653954b");
+```
+*result: s="Be good to people and people will be good to you"*
+
+####192-bit:####
+```
+var s String = "Be good to people and people will be good to you"
+s = s.AesEncrypt("7eabf4e67aa790dba95ef3fd99f87613f1c0741e1d915ea8");
+s = s.AesDecrypt("7eabf4e67aa790dba95ef3fd99f87613f1c0741e1d915ea8");
+```
+*result: s="Be good to people and people will be good to you"*
+
+####265-bit:####
+```
+var s String = "Be good to people and people will be good to you"
+s = s.AesEncrypt("57bcd105c2230065fcdd8ff312c201cdb896e28fa0967be2e2c43d61e7b7409c");
+s = s.AesDecrypt("57bcd105c2230065fcdd8ff312c201cdb896e28fa0967be2e2c43d61e7b7409c");
+```
+*result: s="Be good to people and people will be good to you"*
+
 
 ### **AesEncryptByte(key String) []byte**
 Returns bytes instead of String. Same as AesEncrypt.
 
 ### **AesDecrypt(key String) String** 
-Decrypts a AES String with provided key.
+Decrypts a AES String with provided key. See example above.
 
 ### **AesDecryptByte(key String) String**
 Please convert the []byte slice to String first. This will work!
 
 ### **GenerateAesKeyHex(length int)**
-Generate a hex-key out of a String with the possible lengths of 16,24,32 for 128, 192, 256-bit encryption.
+Generate a random hex-key for Aes-decryption out of a String with the possible lengths of 16,24,32 bytes for 128, 192, 256-bit encryption.
+```
+import (
+	."String"
+	"fmt"
+)
+
+func main () {
+	var s String
+	s = s.GenerateAesKeyHex(16)
+	fmt.Println(s.Tostring())
+}
+```
 
 ### **IsEmail() bool** 
 Checks if String is an email.
+```
+var s String = "kh@kh.com"
+bl = s.IsEmail;
+```
+*result: bl=true*
 
 ### **IsUrl() bool**
 Checks if String is an URL.
+```
+var url String = "https://google.de"
+bl = url.IsUrl()
+```
+*result: bl=true*
 
 ### **IsWholeNumber() bool**
 Checks if String is a whole number.
+```
+var num String = "12345"
+bl = num.IsWholeNumber()
+```
+*result: bl=true*
 
 ### **IsIpV4() bool**
 Checks if String is an IPV4 network adress.
+```
+var ip String = "192.168.0.1"
+bl = ip.IsIpV4()
+```
+*result: bl=true*
 
 ### **IsIpV6() bool**
 Checks if String is an IPV6 network adress.
