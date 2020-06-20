@@ -39,7 +39,7 @@ In addition I added some comfort functions which you can see below. If you have 
 
 
 
-To use the library the right way please import it with a dot in front so it acts like a local library:
+#### To use the library the right way please import it with a dot in front so it acts like a local library:
 
 ```
 import (
