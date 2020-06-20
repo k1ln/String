@@ -304,9 +304,19 @@ bl = pw.PwUpperCase(2)
 
 ### **PwSpecialCase(number int) bool**
 Checks if String contains number of special cases.
+```
+var pw String = "!PwSpecialCase?"
+bl = pw.PwSpecialCase(2)
+```
+*result: bl=true*
 
 ### **PwDigits** 
 Checks if String contains number of digits. 
+```
+var pw String = "1PwDigits1"
+bl = pw.PwSpecialCase(2)
+```
+*result: bl=true*
 
 ### **PwLowerCase(number int) bool**
 Checks if String contains number of lowercases.
