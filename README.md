@@ -25,7 +25,7 @@ go test -bench=.
 ```
 
 
-##All functions from the golang "strings" package were added## 
+## All functions from the golang "strings" package were added
 
 so this works:
 ```
