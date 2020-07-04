@@ -584,6 +584,6 @@ str = str.AddPos("the one and only ",6)
 Search for String in all files provided by path.
 ```
 var str String = "needle"
-str = str.AddPos("/home/user/haystackfiles")
+arr := str.FindInFiles("/home/user/haystackfiles")
 ```
 
