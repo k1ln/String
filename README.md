@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/k1ln/String/badge.svg?branch=master)](https://coveralls.io/github/k1ln/String?branch=master)
 # String
 
-did you ever ask yourself why go has no Object for string? Sou you can do stuff like: 
+Did you ever ask yourself why go has no Object for string? Sou you can do stuff like: 
 
 ```
 var s String = "Das" 
