@@ -412,7 +412,7 @@ Run String as php code and get result, error Strings back. You need php-cli inst
 var str String = "echo 'hello';"
 result,err := str.Php()
 ```
-*result="hello*
+*result="hello"*
 
 ### **Python() (String,String)**
 Run String in Python if Python installed. Returns result,error. 
@@ -420,7 +420,7 @@ Run String in Python if Python installed. Returns result,error.
 var str String = "print(\"hello\")"
 result,err := str.Python()
 ```
-*result="hello*
+*result="hello"*
 
 ### **Node() (String,String)**
 Run String in nodejs if nodejs is installed. Returns result,error.
@@ -428,7 +428,7 @@ Run String in nodejs if nodejs is installed. Returns result,error.
 var str String = "console.log(\"hello\")"
 result,err := str.Node()
 ```
-*result="hello*
+*result="hello"*
 
 
 ### **Perl() (String,String)**
@@ -437,7 +437,7 @@ Run String in Perl if installed. Returns result,error.
 var str String = "print \"hello\";"
 result,err := str.Node()
 ```
-*result="hello*
+*result="hello"*
 
 
 ### **PhpFile() (String,String)**
