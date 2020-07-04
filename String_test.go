@@ -4470,6 +4470,7 @@ func Test_String_FindInFiles(t *testing.T) {
 	}
 }
 */
+/*
 func Test_Strings_substr(t *testing.T) {
 	type args struct {
 		s     Strings
@@ -4581,3 +4582,4 @@ func Test_Strings_Compare(t *testing.T) {
 		})
 	}
 }
+*/

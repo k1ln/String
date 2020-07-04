@@ -20,7 +20,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"reflect"
 	"regexp"
 	"sort"
 	"strconv"
@@ -2013,7 +2012,7 @@ func (s String) FindInFiles(strpath String) Strings {
 	}
 	return ss
 }
-
+/*
 // Starting Strings section
 func (s Strings) len() int {
 	return len(s)
@@ -2121,7 +2120,7 @@ func (s Strings) Count(substr String) []int {
 	}
 	return sss
 }*/
-
+/*
 func (s Strings) HasPrefix(ss String) []bool {
 	var sss []bool
 	for _, val := range s {
