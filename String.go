@@ -1898,7 +1898,7 @@ func (s String) Uint() uint {
 
 // StripTags ...
 func (s String) StripTags() String {
-	var strippedstring String = ""
+	var strippedstring String 
 	var i int
 	var iold int
 	var ommittext = false
