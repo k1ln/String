@@ -676,7 +676,7 @@ func (s String) makeCutsetFunc() func(rune) bool {
 			return r < utf8.RuneSelf && as.contains(byte(r))
 		}
 	}
-	return func(r rune) bool { return cutset.IndexRune(r) >= 0 }
+	return func(r rune) bool { return s.IndexRune(r) >= 0 }
 }
 
 // asciiSet ...
