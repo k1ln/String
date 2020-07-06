@@ -860,8 +860,7 @@ func (s String) AesDecryptByte(key String) String {
 	return String(text)
 }
 
-// generate 16 24 or 32 byte key for 128 192 or 256-bit Encryption
-// GenerateAesKeyHex ...
+// GenerateAesKeyHex generate 16 24 or 32 byte key for 128 192 or 256-bit Encryption
 func (s String) GenerateAesKeyHex(length int) String {
 	if length != 16 && length != 24 && length != 32 {
 		panic("Please use 16,24 or 32 as Key length")
