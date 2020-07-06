@@ -52,8 +52,12 @@ func (s String) substr(start, end int) String {
 }
 
 /*
-SubString Function 
-works with UTF-8 Strings as well
+Substr(start, end int) String    
+A normal substring function utf-8 compatible.
+
+var s String = "Hello world!"
+var ss = s.Substr(3,5);
+result: ss="lo wo"
 */
 func (s String) Substr(start, end int) String {
 	counter, startIdx := 0, 0
