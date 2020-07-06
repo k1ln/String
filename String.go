@@ -2363,7 +2363,7 @@ func (vs *ValSorter) Swap(i, j int) {
 // file get contents url and path
 // Find statt Index und FindALL => Array Find in Files
 // base 64 encode decode
-// POST String to adress => POST Function optional headerobject
+// POST String to address => POST Function optional headerobject
 // GET(paramname, url, optional headerobject)
 // fileputcontents
 // Execute() => in shell return []String rows
