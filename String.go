@@ -2029,7 +2029,7 @@ func (s String) WordCount() map[String]int {
 		cout(msort[i].v)
 		i++
 	}*/
-	m = make(map[String]int)
+	m := make(map[String]int)
 	//cout(len(msort))
 	i = 0
 	for i < len(msort) {
@@ -2087,7 +2087,7 @@ func (s String) AddPos(ss String, pos int) String {
 func (s String) FindInFiles(strpath String) Strings {
 	var ss Strings
 	//cout(strpath)
-	e = filepath.Walk(string(strpath), func(path string, info os.FileInfo, err error) error {
+	e := filepath.Walk(string(strpath), func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
 			return err
