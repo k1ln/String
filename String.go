@@ -1378,7 +1378,7 @@ func (s String) B64URLDecode() String {
 
 // Post ...
 func (s String) Post(url String, contenttype String) String {
-	req, err := http.NewRequest("POST", string(url), bytes.NewBuffer([]byte(s)))
+	req, _ := http.NewRequest("POST", string(url), bytes.NewBuffer([]byte(s)))
 	req.Header.Set("Content-Type", string(contenttype))
 
 	client := &http.Client{
@@ -1986,7 +1986,7 @@ func cout(a ...interface{}) {
 
 // WordCount ...
 func (s String) WordCount() map[String]int {
-	m := make(map[String]int)
+	//m := make(map[String]int)
 	arr := s.Split(" ")
 	i := 0
 	arrlen := len(arr)
@@ -1994,7 +1994,7 @@ func (s String) WordCount() map[String]int {
 	isort := 0
 	for i < arrlen {
 		arri := arr[i]
-		isort = 0
+		//isort = 0
 		lenmsort := len(msort)
 		if lenmsort == 0 {
 			mmsort := Strint{arri, 1}
@@ -2087,14 +2087,6 @@ func (s String) AddPos(ss String, pos int) String {
 func (s String) FindInFiles(strpath String) Strings {
 	var ss Strings
 	//cout(strpath)
-	e := filepath.Walk("/home/k/go/src/String/FindInFilesTestFolder", func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
-			return err
-		}
-		//cout(path)
-		return nil
-	})
 	e = filepath.Walk(string(strpath), func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
