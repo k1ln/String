@@ -1223,48 +1223,45 @@ func (s String) PwUpperCase(number int) bool {
 func (s String) PwSpecialCase(number int) bool {
 	if number == 0 {
 		return true
-	} else {
-		regxstring := "^"
-		i := 0
-		for i < number {
-			regxstring += ".*[!@#$%^&*(),.?\":{}|<>]"
-			i++
-		}
-		var re = regexp.MustCompile(regxstring)
-		return re.MatchString(string(s))
+	} 
+	regxstring := "^"
+	i := 0
+	for i < number {
+		regxstring += ".*[!@#$%^&*(),.?\":{}|<>]"
+		i++
 	}
+	var re = regexp.MustCompile(regxstring)
+	return re.MatchString(string(s))
 }
 
 // PwDigits ...
 func (s String) PwDigits(number int) bool {
 	if number == 0 {
 		return true
-	} else {
-		regxstring := "^"
-		i := 0
-		for i < number {
-			regxstring += ".*[0-9]"
-			i++
-		}
-		var re = regexp.MustCompile(regxstring)
-		return re.MatchString(string(s))
 	}
+	regxstring := "^"
+	i := 0
+	for i < number {
+		regxstring += ".*[0-9]"
+		i++
+	}
+	var re = regexp.MustCompile(regxstring)
+	return re.MatchString(string(s))
 }
 
 // PwLowerCase ...
 func (s String) PwLowerCase(number int) bool {
 	if number == 0 {
 		return true
-	} else {
-		regxstring := "^"
-		i := 0
-		for i < number {
-			regxstring += ".*[0-9]"
-			i++
-		}
-		var re = regexp.MustCompile(regxstring)
-		return re.MatchString(string(s))
+	} 
+	regxstring := "^"
+	i := 0
+	for i < number {
+		regxstring += ".*[0-9]"
+		i++
 	}
+	var re = regexp.MustCompile(regxstring)
+	return re.MatchString(string(s))
 }
 
 // Get ...
