@@ -1281,8 +1281,6 @@ func (s String) Get() String {
 	return String(body)
 }
 
-
-//TODO I need something better here
 // Json ...
 func (s String) Json() map[String]interface{} {
 	var result map[String]interface{}
@@ -1317,22 +1315,20 @@ func (s String) Exists() bool {
 		} else {
 			return false
 		}
-	} else {
-		info, err := os.Stat(string(s))
-		if os.IsNotExist(err) {
-			return false
-		}
-		return !info.IsDir()
+	} 
+	info, err := os.Stat(string(s))
+	if os.IsNotExist(err) {
+		return false
 	}
+	return !info.IsDir()
 }
 
 // GetContents ...
 func (s String) GetContents() String {
 	if s.substr(0, 7) == "http://" || s.substr(0, 8) == "https://" {
 		return s.Get()
-	} else {
-		return s.Open()
-	}
+	} 
+	return s.Open()
 }
 
 // WriteToFile ...
@@ -1469,9 +1465,8 @@ func (s String) Execute() (String, String) {
 			panic(err)
 		}
 		return String(stdout.Bytes()[:len(stdout.Bytes())]).TrimRight("\n"), String(stderr.Bytes()[:len(stdout.Bytes())]).TrimRight("\n")
-	} else {
-		return "", "no commands selected"
-	}
+	} 
+	return "", "no commands selected"
 	// /bin /usr/bin if commands in there than run
 }
 
@@ -1884,7 +1879,7 @@ func (s String) Float64() float64 {
 	return f
 }
 
-// EqualFold ...
+// Float32 ...
 func (s String) Float32() float32 {
 	f, err := strconv.ParseFloat(string(s), 32)
 	if err != nil {
