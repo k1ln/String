@@ -1312,9 +1312,8 @@ func (s String) Exists() bool {
 		}
 		if resp.StatusCode >= 200 && resp.StatusCode <= 299 {
 			return true
-		} else {
-			return false
-		}
+		} 
+		return false
 	} 
 	info, err := os.Stat(string(s))
 	if os.IsNotExist(err) {
@@ -1900,8 +1899,8 @@ func (s String) Uint() uint {
 // StripTags ...
 func (s String) StripTags() String {
 	var strippedstring String = ""
-	var i = 0
-	var iold = 0
+	var i
+	var iold
 	var ommittext = false
 	for _, char := range s {
 		if char == '<' {
@@ -1967,7 +1966,7 @@ func (s String) Right(length int) String {
 // Reverse ...
 func (s String) Reverse() String {
 	i := len(s) - 1
-	var ss String = ""
+	var ss String
 	for i >= 0 {
 		ss += s.substr(i, 1)
 		i--
@@ -1975,6 +1974,7 @@ func (s String) Reverse() String {
 	return ss
 }
 
+//Strint
 type Strint struct {
 	s String
 	v int
@@ -2044,6 +2044,7 @@ func (s String) WordCount() map[String]int {
 const RandomStringCharset = "abcdefghijklmnopqrstuvwxyz" +
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
+// RandomStringseededRand ...
 var RandomStringseededRand *mrand.Rand = mrand.New(
 	mrand.NewSource(time.Now().UnixNano()))
 
@@ -2108,27 +2109,26 @@ func (s String) FindInFiles(strpath String) Strings {
 		if err != nil {
 			//cout(err)
 			return nil
-		} else {
-			//cout("tiefer")
-			defer file.Close()
-			//cout("tiefer2")
-			scanner := bufio.NewScanner(file)
-			scanner.Split(bufio.ScanLines)
-			// This is our buffer now
-			//cout("tiefer3")
-			i := 1
-			for scanner.Scan() {
-				var scannertext String = String(scanner.Text())
-				scannerarr := scannertext.FindAll(s)
-				ii := 0
-				scannerarrlen := len(scannerarr)
-				//cout(scannerarrlen)
-				for ii < scannerarrlen {
-					ss = append(ss, String(path+" - Line:"+strconv.Itoa(i)+" - Pos:"+strconv.Itoa(scannerarr[ii])))
-					ii++
-				}
-				i++
+		} 
+		//cout("tiefer")
+		defer file.Close()
+		//cout("tiefer2")
+		scanner := bufio.NewScanner(file)
+		scanner.Split(bufio.ScanLines)
+		// This is our buffer now
+		//cout("tiefer3")
+		i := 1
+		for scanner.Scan() {
+			var scannertext String = String(scanner.Text())
+			scannerarr := scannertext.FindAll(s)
+			ii := 0
+			scannerarrlen := len(scannerarr)
+			//cout(scannerarrlen)
+			for ii < scannerarrlen {
+				ss = append(ss, String(path+" - Line:"+strconv.Itoa(i)+" - Pos:"+strconv.Itoa(scannerarr[ii])))
+				ii++
 			}
+			i++
 		}
 		return nil
 	})
@@ -2145,11 +2145,11 @@ func (s Strings) len() int {
 }
 
 // Filter ...
-func (arrs Strings) Filter(test func(String) bool) Strings {
+func (s Strings) Filter(test func(String) bool) Strings {
 	var ret Strings
-	for _, s := range arrs {
-		if test(s) {
-			ret = append(ret, s)
+	for _, ss := range s {
+		if test(ss) {
+			ret = append(ret, ss)
 		}
 	}
 	return ret
