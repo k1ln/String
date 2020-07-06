@@ -2671,7 +2671,7 @@ func Test_WriteToFile(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			_ = os.Remove(string(tt.args.path))
 			tt.args.s.WriteToFile(tt.args.path)
-			got := false
+			var got bool
 			if fileExists(string(tt.args.path)) {
 				got = true
 			} else {
