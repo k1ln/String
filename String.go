@@ -1899,8 +1899,8 @@ func (s String) Uint() uint {
 // StripTags ...
 func (s String) StripTags() String {
 	var strippedstring String = ""
-	var i
-	var iold
+	var i int
+	var iold int
 	var ommittext = false
 	for _, char := range s {
 		if char == '<' {
