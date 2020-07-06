@@ -51,6 +51,10 @@ func (s String) substr(start, end int) String {
 	return s[startIdx:]
 }
 
+/*
+SubString Function 
+works with UTF-8 Strings as well
+*/
 func (s String) Substr(start, end int) String {
 	counter, startIdx := 0, 0
 	end = end + start
