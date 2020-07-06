@@ -34,6 +34,7 @@ type String string
 // Strings ...
 type Strings []String
 
+// Timeout ...
 var Timeout = 5
 var asciiSpace = [256]uint8{'\t': 1, '\n': 1, '\v': 1, '\f': 1, '\r': 1, ' ': 1}
 
@@ -664,13 +665,13 @@ func (s String) indexFunc(f func(rune) bool, truth bool) int {
 }
 
 // makeCutsetFunc ...
-func (cutset String) makeCutsetFunc() func(rune) bool {
-	if len(cutset) == 1 && cutset[0] < utf8.RuneSelf {
+func (s String) makeCutsetFunc() func(rune) bool {
+	if len(s) == 1 && s[0] < utf8.RuneSelf {
 		return func(r rune) bool {
-			return r == rune(cutset[0])
+			return r == rune(s[0])
 		}
 	}
-	if as, isASCII := cutset.makeASCIISet(); isASCII {
+	if as, isASCII := s.makeASCIISet(); isASCII {
 		return func(r rune) bool {
 			return r < utf8.RuneSelf && as.contains(byte(r))
 		}
