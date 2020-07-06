@@ -683,9 +683,9 @@ func (s String) makeCutsetFunc() func(rune) bool {
 type asciiSet [8]uint32
 
 // makeASCIISet ...
-func (chars String) makeASCIISet() (as asciiSet, ok bool) {
-	for i := 0; i < len(chars); i++ {
-		c := chars[i]
+func (s String) makeASCIISet() (as asciiSet, ok bool) {
+	for i := 0; i < len(s); i++ {
+		c := s[i]
 		if c >= utf8.RuneSelf {
 			return as, false
 		}
