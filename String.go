@@ -1208,16 +1208,15 @@ func (s String) IsIbanFast(country String) bool {
 func (s String) PwUpperCase(number int) bool {
 	if number == 0 {
 		return true
-	} else {
-		regxstring := "^"
-		i := 0
-		for i < number {
-			regxstring += ".*[A-Z]"
-			i++
-		}
-		var re = regexp.MustCompile(regxstring)
-		return re.MatchString(string(s))
 	}
+	regxstring := "^"
+	i := 0
+	for i < number {
+		regxstring += ".*[A-Z]"
+		i++
+	}
+	var re = regexp.MustCompile(regxstring)
+	return re.MatchString(string(s))
 }
 
 // PwSpecialCase ...
