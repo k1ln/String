@@ -1974,7 +1974,7 @@ func (s String) Reverse() String {
 	return ss
 }
 
-//Strint
+// Strint ...
 type Strint struct {
 	s String
 	v int
