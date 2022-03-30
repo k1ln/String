@@ -435,7 +435,7 @@ result,err := str.Node()
 Run String in Perl if installed. Returns result,error.
 ```
 var str String = "print \"hello\";"
-result,err := str.Node()
+result,err := str.Perl()
 ```
 *result="hello"*
 
