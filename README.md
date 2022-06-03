@@ -256,7 +256,7 @@ bl = ip.IsHtmlTag()
 Checks if String is a phone number. 
 ```
 var phonenumber String = "01776374859663"
-bl = phonenumber.IsHtmlTag()
+bl = phonenumber.IsPhoneNumber()
 ```
 *result: bl=true*
 
