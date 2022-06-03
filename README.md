@@ -312,11 +312,11 @@ bl = pw.PwSpecialCase(2)
 ```
 *result: bl=true*
 
-### **PwDigits** 
+### **PwDigits()** 
 Checks if String contains number of digits. 
 ```
 var pw String = "1PwDigits1"
-bl = pw.PwSpecialCase(2)
+bl = pw.PwDigits()
 ```
 *result: bl=true*
 
@@ -324,7 +324,7 @@ bl = pw.PwSpecialCase(2)
 Checks if String contains number of lowercases.
 ```
 var pw String = "PwLOWERcASE"
-bl = pw.PwSpecialCase(2)
+bl = pw.PwLowerCase(2)
 ```
 *result: bl=true*
 
