@@ -13,7 +13,7 @@ bl := s.Contains("s")
 instead of:
 
 ```
-s := "Das" 
+s := "Das"
 bl := strings.Contains(s,"s")
 ```
 
