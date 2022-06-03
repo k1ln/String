@@ -20,7 +20,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"reflect"
 	"regexp"
 	"sort"
 	"strconv"
@@ -29,12 +28,10 @@ import (
 	"unicode"
 	"unicode/utf8"
 )
-// String ...
+
 type String string
-// Strings ...
 type Strings []String
 
-// Timeout ...
 var Timeout = 5
 var asciiSpace = [256]uint8{'\t': 1, '\n': 1, '\v': 1, '\f': 1, '\r': 1, ' ': 1}
 
@@ -53,7 +50,6 @@ func (s String) substr(start, end int) String {
 	return s[startIdx:]
 }
 
-// Substr ... 
 func (s String) Substr(start, end int) String {
 	counter, startIdx := 0, 0
 	end = end + start
@@ -69,12 +65,10 @@ func (s String) Substr(start, end int) String {
 	return s[startIdx:]
 }
 
-// Tostring ...
 func (s String) Tostring() string {
 	return string(s)
 }
 
-// ASCIIsubstr ...
 func (s String) ASCIIsubstr(start, end int) String {
 	lens := start + end
 	if lens > len(s)-start {
@@ -83,7 +77,6 @@ func (s String) ASCIIsubstr(start, end int) String {
 	return s[start:lens]
 }
 
-// Compare ...
 func (s String) Compare(b String) int {
 	if s == b {
 		return 0
@@ -94,32 +87,26 @@ func (s String) Compare(b String) int {
 	return +1
 }
 
-// Contains ...
 func (s String) Contains(substr String) bool {
 	return strings.Index(string(s), string(substr)) >= 0
 }
 
-// ContainsAny ...
 func (s String) ContainsAny(chars String) int {
 	return strings.IndexAny(string(s), string(chars))
 }
 
-// ContainsRune ...
 func (s String) ContainsRune(r rune) bool {
 	return strings.IndexRune(string(s), r) >= 0
 }
 
-// Count ...
 func (s String) Count(substr String) int {
 	return strings.Count(string(s), string(substr))
 }
 
-// EqualFold ...
 func (s String) EqualFold(t String) bool {
 	return strings.EqualFold(string(s), string(t))
 }
 
-// Fields ...
 func (s String) Fields() Strings {
 	// First count the fields.
 	// This is an exact count if s is ASCII, otherwise it is an approximation.
@@ -169,7 +156,6 @@ func (s String) Fields() Strings {
 	return a
 }
 
-// FieldsFunc ...
 func (s String) FieldsFunc(f func(rune) bool) []String {
 	// A span is used to record a slice of s of the form s[start:end].
 	// The start index is inclusive and the end index is exclusive.
@@ -210,20 +196,17 @@ func (s String) FieldsFunc(f func(rune) bool) []String {
 	return a
 }
 
-// HasPrefix ...
 func (s String) HasPrefix(prefix String) bool {
 	l := len(prefix)
 	return len(s) >= l && s[0:l] == prefix
 }
 
-// HasSuffix ...
 func (s String) HasSuffix(suffix String) bool {
 	l := len(suffix)
 	ls := len(s)
 	return ls >= l && s[ls-l:] == suffix
 }
 
-// len ...
 func (s String) len() int {
 	return len(s)
 }
@@ -232,27 +215,22 @@ func (s String) length() int {
 	return len(s)
 }
 
-// Index ...
 func (s String) Index(substr String) int {
 	return strings.Index(string(s), string(substr))
 }
 
-// IndexAny ...
 func (s String) IndexAny(chars String) int {
 	return strings.IndexAny(string(s), string(chars))
 }
 
-// IndexByte ...
 func (s String) IndexByte(c byte) int {
 	return strings.IndexByte(string(s), c)
 }
 
-// IndexFunc ...
 func (s String) IndexFunc(f func(rune) bool) int {
 	return strings.IndexFunc(string(s), f)
 }
 
-// IndexRune ...
 func (s String) IndexRune(r rune) int {
 	switch {
 	case 0 <= r && r < utf8.RuneSelf:
@@ -271,7 +249,6 @@ func (s String) IndexRune(r rune) int {
 	}
 }
 
-// Join ...
 func (s Strings) Join(sep String) String {
 	ls := len(s)
 	ssep := string(sep)
@@ -296,17 +273,14 @@ func (s Strings) Join(sep String) String {
 	return String(b.String())
 }
 
-// LastIndex ...
 func (s String) LastIndex(substr String) int {
 	return strings.LastIndex(string(s), string(substr))
 }
 
-// LastIndexAny ...
 func (s String) LastIndexAny(chars String) int {
 	return strings.LastIndexAny(string(s), string(chars))
 }
 
-// LastIndexByte ...
 func (s String) LastIndexByte(c byte) int {
 	for i := len(s) - 1; i >= 0; i-- {
 		if s[i] == c {
@@ -316,12 +290,10 @@ func (s String) LastIndexByte(c byte) int {
 	return -1
 }
 
-// LastIndexFunc ...
 func (s String) LastIndexFunc(f func(rune) bool) int {
 	return s.lastIndexFunc(f, true)
 }
 
-// lastIndexFunc ...
 func (s String) lastIndexFunc(f func(rune) bool, truth bool) int {
 	for i := len(s); i > 0; {
 		r, size := utf8.DecodeLastRuneInString(string(s)[0:i])
@@ -333,12 +305,10 @@ func (s String) lastIndexFunc(f func(rune) bool, truth bool) int {
 	return -1
 }
 
-// Map ...
 func (s String) Map(mapping func(rune) rune) String {
 	return String(strings.Map(mapping, string(s)))
 }
 
-// Repeat ...
 func (s String) Repeat(count int) String {
 	ss := string(s)
 	ls := len(s)
@@ -371,22 +341,18 @@ func (s String) Repeat(count int) String {
 	return String(b.String())
 }
 
-// Replace ...
 func (s String) Replace(old, new String, n int) String {
 	return String(strings.Replace(string(s), string(old), string(new), n))
 }
 
-// ReplaceAll ...
 func (s String) ReplaceAll(old, new String) String {
 	return s.Replace(old, new, -1)
 }
 
-// Split ...
 func (s String) Split(sep String) []String {
 	return s.genSplit(sep, 0, -1)
 }
 
-// genSplit ...
 func (s String) genSplit(sep String, sepSave, n int) []String {
 	if n == 0 {
 		return nil
@@ -414,7 +380,6 @@ func (s String) genSplit(sep String, sepSave, n int) []String {
 	return a[:i+1]
 }
 
-// explode ...
 func (s String) explode(n int) []String {
 	l := utf8.RuneCountInString(string(s))
 	if n < 0 || n > l {
@@ -435,22 +400,18 @@ func (s String) explode(n int) []String {
 	return a
 }
 
-// SplitAfter ...
 func (s String) SplitAfter(sep String) []String {
 	return s.genSplit(sep, len(sep), -1)
 }
 
-// SplitAfterN ...
 func (s String) SplitAfterN(sep String, n int) []String {
 	return s.genSplit(sep, len(sep), n)
 }
 
-// SplitN ...
 func (s String) SplitN(sep String, n int) []String {
 	return s.genSplit(sep, 0, n)
 }
 
-// Title ...
 func (s String) Title() String {
 	// Use a closure here to remember state.
 	// Hackish but effective. Depends on Map scanning in order and calling
@@ -467,7 +428,6 @@ func (s String) Title() String {
 		})
 }
 
-// isSeparator ...
 func isSeparator(r rune) bool {
 	// ASCII alphanumerics and underscore are not separators
 	if r <= 0x7F {
@@ -491,7 +451,6 @@ func isSeparator(r rune) bool {
 	return unicode.IsSpace(r)
 }
 
-// ToLower ...
 func (s String) ToLower() String {
 	isASCII, hasUpper := true, false
 	for i := 0; i < len(s); i++ {
@@ -521,15 +480,12 @@ func (s String) ToLower() String {
 	return s.Map(unicode.ToLower)
 }
 
-// ToLowerSpecial ...
 func (s String) ToLowerSpecial(c unicode.SpecialCase) String {
 	return s.Map(c.ToLower)
 }
 
-// ToTitle ...
 func (s String) ToTitle() String { return s.Map(unicode.ToTitle) }
 
-// ToUpper ...
 func (s String) ToUpper() String {
 	isASCII, hasLower := true, false
 	for i := 0; i < len(s); i++ {
@@ -559,17 +515,14 @@ func (s String) ToUpper() String {
 	return s.Map(unicode.ToUpper)
 }
 
-// ToTitleSpecial ...
 func (s String) ToTitleSpecial(c unicode.SpecialCase) String {
 	return s.Map(c.ToTitle)
 }
 
-// ToUpperSpecial ...
 func (s String) ToUpperSpecial(c unicode.SpecialCase) String {
 	return s.Map(c.ToUpper)
 }
 
-// ToValidUTF8 ...
 // I dont know how to test this TODO
 func (s String) ToValidUTF8(replacement String) String {
 	var b strings.Builder
@@ -620,7 +573,6 @@ func (s String) ToValidUTF8(replacement String) String {
 	return String(b.String())
 }
 
-// Trim ...
 func (s String) Trim(cutset String) String {
 	if s == "" || cutset == "" {
 		return s
@@ -628,12 +580,10 @@ func (s String) Trim(cutset String) String {
 	return s.TrimFunc(cutset.makeCutsetFunc())
 }
 
-// TrimFunc ...
 func (s String) TrimFunc(f func(rune) bool) String {
 	return s.TrimLeftFunc(f).TrimRightFunc(f)
 }
 
-// TrimRightFunc ...
 func (s String) TrimRightFunc(f func(rune) bool) String {
 	i := s.lastIndexFunc(f, false)
 	if i >= 0 && s[i] >= utf8.RuneSelf {
@@ -645,7 +595,6 @@ func (s String) TrimRightFunc(f func(rune) bool) String {
 	return s[0:i]
 }
 
-// TrimLeftFunc ...
 func (s String) TrimLeftFunc(f func(rune) bool) String {
 	i := s.indexFunc(f, false)
 	if i == -1 {
@@ -654,7 +603,6 @@ func (s String) TrimLeftFunc(f func(rune) bool) String {
 	return s[i:]
 }
 
-// indexFunc ...
 func (s String) indexFunc(f func(rune) bool, truth bool) int {
 	for i, r := range s {
 		if f(r) == truth {
@@ -664,28 +612,25 @@ func (s String) indexFunc(f func(rune) bool, truth bool) int {
 	return -1
 }
 
-// makeCutsetFunc ...
-func (s String) makeCutsetFunc() func(rune) bool {
-	if len(s) == 1 && s[0] < utf8.RuneSelf {
+func (cutset String) makeCutsetFunc() func(rune) bool {
+	if len(cutset) == 1 && cutset[0] < utf8.RuneSelf {
 		return func(r rune) bool {
-			return r == rune(s[0])
+			return r == rune(cutset[0])
 		}
 	}
-	if as, isASCII := s.makeASCIISet(); isASCII {
+	if as, isASCII := cutset.makeASCIISet(); isASCII {
 		return func(r rune) bool {
 			return r < utf8.RuneSelf && as.contains(byte(r))
 		}
 	}
-	return func(r rune) bool { return s.IndexRune(r) >= 0 }
+	return func(r rune) bool { return cutset.IndexRune(r) >= 0 }
 }
 
-// asciiSet ...
 type asciiSet [8]uint32
 
-// makeASCIISet ...
-func (s String) makeASCIISet() (as asciiSet, ok bool) {
-	for i := 0; i < len(s); i++ {
-		c := s[i]
+func (chars String) makeASCIISet() (as asciiSet, ok bool) {
+	for i := 0; i < len(chars); i++ {
+		c := chars[i]
 		if c >= utf8.RuneSelf {
 			return as, false
 		}
@@ -694,12 +639,10 @@ func (s String) makeASCIISet() (as asciiSet, ok bool) {
 	return as, true
 }
 
-// contains ...
 func (as *asciiSet) contains(c byte) bool {
 	return (as[c>>5] & (1 << uint(c&31))) != 0
 }
 
-// TrimLeft ...
 func (s String) TrimLeft(cutset String) String {
 	if s == "" || cutset == "" {
 		return s
@@ -707,7 +650,6 @@ func (s String) TrimLeft(cutset String) String {
 	return s.TrimLeftFunc(cutset.makeCutsetFunc())
 }
 
-// TrimPrefix ...
 func (s String) TrimPrefix(prefix String) String {
 	if s.HasPrefix(prefix) {
 		return s[len(prefix):]
@@ -715,7 +657,6 @@ func (s String) TrimPrefix(prefix String) String {
 	return s
 }
 
-// TrimRight ...
 func (s String) TrimRight(cutset String) String {
 	if s == "" || cutset == "" {
 		return s
@@ -723,7 +664,6 @@ func (s String) TrimRight(cutset String) String {
 	return s.TrimRightFunc(cutset.makeCutsetFunc())
 }
 
-// TrimSpace ...
 func (s String) TrimSpace() String {
 	// Fast path for ASCII: look for the first ASCII non-space byte
 	start := 0
@@ -757,7 +697,6 @@ func (s String) TrimSpace() String {
 	return s[start:stop]
 }
 
-// TrimSuffix ...
 func (s String) TrimSuffix(suffix String) String {
 	if s.HasSuffix(suffix) {
 		return s[:len(s)-len(suffix)]
@@ -767,21 +706,19 @@ func (s String) TrimSuffix(suffix String) String {
 
 //own functions
 
-// Md5 ...
 func (s String) Md5() String {
 	h := md5.New()
 	io.WriteString(h, string(s))
 	return String(hex.EncodeToString(h.Sum(nil)[:]))
 }
 
-// Sha1 ...
 func (s String) Sha1() String {
 	h := sha1.New()
 	io.WriteString(h, string(s))
 	return String(hex.EncodeToString(h.Sum(nil)[:]))
 }
 
-// AesEncrypt ...
+//uses CTR
 func (s String) AesEncrypt(key String) String {
 	hexkey, _ := hex.DecodeString(string(key))
 	str := []byte(s)
@@ -803,7 +740,7 @@ func (s String) AesEncrypt(key String) String {
 	return String(b64.StdEncoding.EncodeToString(append(IV, cypher[blocksize:]...)))
 }
 
-// AesEncryptByte returns byte if you want to return binary
+//returns byte if you want to return binary
 func (s String) AesEncryptByte(key String) []byte {
 	hexkey, _ := hex.DecodeString(string(key))
 	str := []byte(s)
@@ -825,7 +762,7 @@ func (s String) AesEncryptByte(key String) []byte {
 	return append(IV, cypher[blocksize:]...)
 }
 
-// AesDecrypt needs base64encoded string
+//needs base64encoded string
 func (s String) AesDecrypt(key String) String {
 	stra, _ := b64.StdEncoding.DecodeString(string(s))
 	str := []byte(stra)
@@ -843,7 +780,7 @@ func (s String) AesDecrypt(key String) String {
 	return String(text)
 }
 
-// AesDecryptByte Convert byte to String object to use it. It will work
+//Convert byte to String object to use it. It will work
 func (s String) AesDecryptByte(key String) String {
 	str := []byte(s)
 	hexkey, _ := hex.DecodeString(string(key))
@@ -860,7 +797,7 @@ func (s String) AesDecryptByte(key String) String {
 	return String(text)
 }
 
-// GenerateAesKeyHex generate 16 24 or 32 byte key for 128 192 or 256-bit Encryption
+// generate 16 24 or 32 byte key for 128 192 or 256-bit Encryption
 func (s String) GenerateAesKeyHex(length int) String {
 	if length != 16 && length != 24 && length != 32 {
 		panic("Please use 16,24 or 32 as Key length")
@@ -1108,71 +1045,59 @@ func (s String) string() string {
 	return string(s)
 }
 
-// IsEmail ...
 func (s String) IsEmail() bool {
 	return reEmail.MatchString(s.string())
 }
 
-// IsUrl ...
 func (s String) IsUrl() bool {
 	return reUrl.MatchString(s.string())
 }
 
 /*
 func (s String) IsComplexPw() bool{
-	return reComplexPw.MatchString(s.string())
+        return reComplexPw.MatchString(s.string())
 }
 */
 
-// IsWholeNumber ...
 func (s String) IsWholeNumber() bool {
 	return reWholeNumber.MatchString(s.string())
 }
 
-// IsIpV4 ...
 func (s String) IsIpV4() bool {
 	return reIsIpV4.MatchString(s.string())
 }
 
-// IsIpV6 ...
 func (s String) IsIpV6() bool {
 	return reIsIpV6.MatchString(s.string())
 }
 
-// IsIp ...
 func (s String) IsIp() bool {
 	return reIsIp.MatchString(s.string())
 }
 
-// IsHtmlTag ...
 func (s String) IsHtmlTag() bool {
 	return reIsHtmlTag.MatchString(s.string())
 }
 
-// IsPhoneNumber ...
 func (s String) IsPhoneNumber() bool {
 	return reIsPhoneNumber.MatchString(s.string())
 }
 
-// IsFilePath ...
 func (s String) IsFilePath() bool {
 	return reIsFilePath.MatchString(s.string())
 }
 
-// IsUserName ...
 func (s String) IsUserName(min int, max int) bool {
 	reUserName := reUserNamestr.ReplaceAll("{min}", String(strconv.Itoa(min))).ReplaceAll("{max}", String(strconv.Itoa(max)))
 	rexUserName := regexp.MustCompile(reUserName.string())
 	return rexUserName.MatchString(string(s))
 }
 
-// IsZipCode ...
 func (s String) IsZipCode(country String) bool {
 	var reIsZip = regexp.MustCompile(reZipMap[country].string())
 	return reIsZip.MatchString(s.string())
 }
 
-// IsIban ...
 func (s String) IsIban(country String) bool {
 	var reIsIban = regexp.MustCompile(reIbanMap[country].string())
 	return reIsIban.MatchString(s.string())
@@ -1180,91 +1105,85 @@ func (s String) IsIban(country String) bool {
 
 var reIsZipFast = regexp.MustCompile("\\d{5}|\\d{4}")
 
-// PrecompileIsZipCodeFast ...
 func (s String) PrecompileIsZipCodeFast(country String) {
 	reIsZipFast = regexp.MustCompile(reZipMap[country].string())
 }
 
-// IsZipCodeFast ...
 func (s String) IsZipCodeFast(country String) bool {
 	return reIsZipFast.MatchString(s.string())
 }
 
-// reIsIbanFast ...
 var reIsIbanFast = regexp.MustCompile("^(.+)/([^/]+)$")
 
-// PrecompileIsIbanFast ...
 func (s String) PrecompileIsIbanFast(country String) {
 	reIsIbanFast = regexp.MustCompile(reIbanMap[country].string())
 }
 
-// IsIbanFast ...
 func (s String) IsIbanFast(country String) bool {
 	var reIsIban = regexp.MustCompile(reIbanMap[country].string())
 	return reIsIban.MatchString(s.string())
 }
 
-// PwUpperCase ...
 func (s String) PwUpperCase(number int) bool {
 	if number == 0 {
 		return true
+	} else {
+		regxstring := "^"
+		i := 0
+		for i < number {
+			regxstring += ".*[A-Z]"
+			i++
+		}
+		var re = regexp.MustCompile(regxstring)
+		return re.MatchString(string(s))
 	}
-	regxstring := "^"
-	i := 0
-	for i < number {
-		regxstring += ".*[A-Z]"
-		i++
-	}
-	var re = regexp.MustCompile(regxstring)
-	return re.MatchString(string(s))
 }
 
-// PwSpecialCase ...
 func (s String) PwSpecialCase(number int) bool {
 	if number == 0 {
 		return true
-	} 
-	regxstring := "^"
-	i := 0
-	for i < number {
-		regxstring += ".*[!@#$%^&*(),.?\":{}|<>]"
-		i++
+	} else {
+		regxstring := "^"
+		i := 0
+		for i < number {
+			regxstring += ".*[!@#$%^&*(),.?\":{}|<>]"
+			i++
+		}
+		var re = regexp.MustCompile(regxstring)
+		return re.MatchString(string(s))
 	}
-	var re = regexp.MustCompile(regxstring)
-	return re.MatchString(string(s))
 }
 
-// PwDigits ...
 func (s String) PwDigits(number int) bool {
 	if number == 0 {
 		return true
+	} else {
+		regxstring := "^"
+		i := 0
+		for i < number {
+			regxstring += ".*[0-9]"
+			i++
+		}
+		var re = regexp.MustCompile(regxstring)
+		return re.MatchString(string(s))
 	}
-	regxstring := "^"
-	i := 0
-	for i < number {
-		regxstring += ".*[0-9]"
-		i++
-	}
-	var re = regexp.MustCompile(regxstring)
-	return re.MatchString(string(s))
 }
 
-// PwLowerCase ...
 func (s String) PwLowerCase(number int) bool {
 	if number == 0 {
 		return true
-	} 
-	regxstring := "^"
-	i := 0
-	for i < number {
-		regxstring += ".*[0-9]"
-		i++
+	} else {
+		regxstring := "^"
+		i := 0
+		for i < number {
+			regxstring += ".*[0-9]"
+			i++
+		}
+		var re = regexp.MustCompile(regxstring)
+		return re.MatchString(string(s))
 	}
-	var re = regexp.MustCompile(regxstring)
-	return re.MatchString(string(s))
 }
 
-// Get ...
 func (s String) Get() String {
 	client := http.Client{
 		Timeout: time.Duration(Timeout) * time.Second,
@@ -1281,7 +1200,7 @@ func (s String) Get() String {
 	return String(body)
 }
 
-// Json ...
+//TODO I need something better here
 func (s String) Json() map[String]interface{} {
 	var result map[String]interface{}
 	//for each in continue interface is varienat though
@@ -1289,12 +1208,10 @@ func (s String) Json() map[String]interface{} {
 	return result
 }
 
-// Open ...
 func (s String) Open() String {
 	return String(s.OpenByte())
 }
 
-// OpenByte ...
 func (s String) OpenByte() []byte {
 	b, err := ioutil.ReadFile(string(s)) // just pass the file name
 	if err != nil {
@@ -1303,7 +1220,6 @@ func (s String) OpenByte() []byte {
 	return b
 }
 
-// Exists ...
 func (s String) Exists() bool {
 	if s.substr(0, 7) == "http://" || s.substr(0, 8) == "https://" {
 		resp, err := http.Get(string(s))
@@ -1312,25 +1228,26 @@ func (s String) Exists() bool {
 		}
 		if resp.StatusCode >= 200 && resp.StatusCode <= 299 {
 			return true
-		} 
-		return false
-	} 
-	info, err := os.Stat(string(s))
-	if os.IsNotExist(err) {
-		return false
+		} else {
+			return false
+		}
+	} else {
+		info, err := os.Stat(string(s))
+		if os.IsNotExist(err) {
+			return false
+		}
+		return !info.IsDir()
 	}
-	return !info.IsDir()
 }
 
-// GetContents ...
 func (s String) GetContents() String {
 	if s.substr(0, 7) == "http://" || s.substr(0, 8) == "https://" {
 		return s.Get()
-	} 
-	return s.Open()
+	} else {
+		return s.Open()
+	}
 }
 
-// WriteToFile ...
 func (s String) WriteToFile(path String) {
 	f, err := os.OpenFile(string(path),
 		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -1343,42 +1260,35 @@ func (s String) WriteToFile(path String) {
 	}
 }
 
-// URLEncode ...
 func (s String) URLEncode() String {
 	return String(url.QueryEscape(string(s)))
 }
 
-// URLDecode ...
 func (s String) URLDecode() String {
 	dec, _ := url.QueryUnescape(string(s))
 	return String(dec)
 }
 
-// B64Encode ...
 func (s String) B64Encode() String {
 	return String(b64.StdEncoding.EncodeToString([]byte(s)))
 }
 
-// B64Decode ...
 func (s String) B64Decode() String {
 	dec, _ := b64.StdEncoding.DecodeString(string(s))
 	return String(dec)
 }
 
-// B64URLEncode ...
 func (s String) B64URLEncode() String {
 	return String(b64.URLEncoding.EncodeToString([]byte(s)))
 }
 
-// B64URLDecode ...
 func (s String) B64URLDecode() String {
 	dec, _ := b64.URLEncoding.DecodeString(string(s))
 	return String(dec)
 }
 
-// Post ...
 func (s String) Post(url String, contenttype String) String {
-	req, _ := http.NewRequest("POST", string(url), bytes.NewBuffer([]byte(s)))
+	req, err := http.NewRequest("POST", string(url), bytes.NewBuffer([]byte(s)))
 	req.Header.Set("Content-Type", string(contenttype))
 
 	client := &http.Client{
@@ -1393,7 +1303,6 @@ func (s String) Post(url String, contenttype String) String {
 	return String(body)
 }
 
-// CreateCommandFields ...
 func (s String) CreateCommandFields() []String {
 	i := 0
 	inquotes := false
@@ -1444,7 +1353,6 @@ func (s String) CreateCommandFields() []String {
 	return commands
 }
 
-// Execute ...
 func (s String) Execute() (String, String) {
 	commands := s.CreateCommandFields()
 	if len(commands) > 0 {
@@ -1464,60 +1372,52 @@ func (s String) Execute() (String, String) {
 			panic(err)
 		}
 		return String(stdout.Bytes()[:len(stdout.Bytes())]).TrimRight("\n"), String(stderr.Bytes()[:len(stdout.Bytes())]).TrimRight("\n")
-	} 
-	return "", "no commands selected"
+	} else {
+		return "", "no commands selected"
+	}
 	// /bin /usr/bin if commands in there than run
 }
 
-// Php ...
 func (s String) Php() (String, String) {
 	var ss String = "php -r \"" + s + "\""
 	return ss.Execute()
 }
 
-// Python ...
 func (s String) Python() (String, String) {
 	var ss String = "python -c '" + s + "'"
 	return ss.Execute()
 }
 
-// Node ...
 func (s String) Node() (String, String) {
 	var ss String = "node -e '" + s + "'"
 	return ss.Execute()
 }
 
-// Perl ...
 func (s String) Perl() (String, String) {
 	var ss String = "perl -e '" + s + "'"
 	return ss.Execute()
 }
 
-// PhpFile ...
 func (s String) PhpFile() (String, String) {
 	var ss String = "php -f " + s
 	return ss.Execute()
 }
 
-// PythonFile ...
 func (s String) PythonFile() (String, String) {
 	var ss String = "python " + s
 	return ss.Execute()
 }
 
-// NodeFile ...
 func (s String) NodeFile() (String, String) {
 	var ss String = "node " + s
 	return ss.Execute()
 }
 
-// PerlFile ...
 func (s String) PerlFile() (String, String) {
 	var ss String = "perl " + s
 	return ss.Execute()
 }
 
-// ParseDateLocal ...
 func (s String) ParseDateLocal(format String, location String) time.Time {
 	loc, err := time.LoadLocation(string(location))
 	if err != nil {
@@ -1668,7 +1568,6 @@ func (s String) ParseDateLocal(format String, location String) time.Time {
 	return timee
 }
 
-// ParseDate ...
 func (s String) ParseDate(format String) time.Time {
 	if format.Contains("YY") {
 		if format.Contains("YYYY") {
@@ -1815,7 +1714,6 @@ func (s String) ParseDate(format String) time.Time {
 	return timee
 }
 
-// Int ...
 func (s String) Int() int {
 	i, err := strconv.Atoi(string(s))
 	if err != nil {
@@ -1824,7 +1722,6 @@ func (s String) Int() int {
 	return i
 }
 
-// Int32 ...
 func (s String) Int32() int32 {
 	i, err := strconv.ParseInt(string(s), 10, 32)
 	if err != nil {
@@ -1833,7 +1730,6 @@ func (s String) Int32() int32 {
 	return int32(i)
 }
 
-// Int64 ...
 func (s String) Int64() int64 {
 	i, err := strconv.ParseInt(string(s), 10, 64)
 	if err != nil {
@@ -1842,7 +1738,6 @@ func (s String) Int64() int64 {
 	return i
 }
 
-// Uint32 ...
 func (s String) Uint32() uint32 {
 	i, err := strconv.ParseUint(string(s), 10, 32)
 	if err != nil {
@@ -1851,7 +1746,6 @@ func (s String) Uint32() uint32 {
 	return uint32(i)
 }
 
-// Uint64 ...
 func (s String) Uint64() uint64 {
 	i, err := strconv.ParseUint(string(s), 10, 64)
 	if err != nil {
@@ -1860,7 +1754,6 @@ func (s String) Uint64() uint64 {
 	return i
 }
 
-// Bool ...
 func (s String) Bool() bool {
 	b, err := strconv.ParseBool(string(s))
 	if err != nil {
@@ -1869,7 +1762,6 @@ func (s String) Bool() bool {
 	return b
 }
 
-// Float64 ...
 func (s String) Float64() float64 {
 	f, err := strconv.ParseFloat(string(s), 64)
 	if err != nil {
@@ -1878,7 +1770,6 @@ func (s String) Float64() float64 {
 	return f
 }
 
-// Float32 ...
 func (s String) Float32() float32 {
 	f, err := strconv.ParseFloat(string(s), 32)
 	if err != nil {
@@ -1887,7 +1778,6 @@ func (s String) Float32() float32 {
 	return float32(f)
 }
 
-// Uint ...
 func (s String) Uint() uint {
 	u, err := strconv.ParseUint(string(s), 10, 64)
 	if err != nil {
@@ -1896,11 +1786,10 @@ func (s String) Uint() uint {
 	return uint(u)
 }
 
-// StripTags ...
 func (s String) StripTags() String {
-	var strippedstring String 
-	var i int
-	var iold int
+	var strippedstring String = ""
+	var i = 0
+	var iold = 0
 	var ommittext = false
 	for _, char := range s {
 		if char == '<' {
@@ -1927,12 +1816,10 @@ func (s String) StripTags() String {
 	return strippedstring
 }
 
-// Find ...
 func (s String) Find(substring String) int {
 	return s.Index(substring)
 }
 
-// FindAll ...
 func (s String) FindAll(substring String) []int {
 	ilength := len(s)
 	i := 0
@@ -1953,20 +1840,17 @@ func (s String) FindAll(substring String) []int {
 	return intarr
 }
 
-// Left ...
 func (s String) Left(length int) String {
 	return s.substr(0, length)
 }
 
-// Right ...
 func (s String) Right(length int) String {
 	return s.substr(len(s)-length, length)
 }
 
-// Reverse ...
 func (s String) Reverse() String {
 	i := len(s) - 1
-	var ss String
+	var ss String = ""
 	for i >= 0 {
 		ss += s.substr(i, 1)
 		i--
@@ -1974,7 +1858,6 @@ func (s String) Reverse() String {
 	return ss
 }
 
-// Strint ...
 type Strint struct {
 	s String
 	v int
@@ -1984,9 +1867,8 @@ func cout(a ...interface{}) {
 	fmt.Println(a...)
 }
 
-// WordCount ...
 func (s String) WordCount() map[String]int {
-	//m := make(map[String]int)
+	m := make(map[String]int)
 	arr := s.Split(" ")
 	i := 0
 	arrlen := len(arr)
@@ -1994,7 +1876,7 @@ func (s String) WordCount() map[String]int {
 	isort := 0
 	for i < arrlen {
 		arri := arr[i]
-		//isort = 0
+		isort = 0
 		lenmsort := len(msort)
 		if lenmsort == 0 {
 			mmsort := Strint{arri, 1}
@@ -2024,12 +1906,12 @@ func (s String) WordCount() map[String]int {
 		return msort[i].v > msort[j].v
 	})
 	/*i=0
-	for i < len(msort) {
-		cout(msort[i].s)
-		cout(msort[i].v)
-		i++
-	}*/
-	m := make(map[String]int)
+	  for i < len(msort) {
+	          cout(msort[i].s)
+	          cout(msort[i].v)
+	          i++
+	  }*/
+	m = make(map[String]int)
 	//cout(len(msort))
 	i = 0
 	for i < len(msort) {
@@ -2040,15 +1922,12 @@ func (s String) WordCount() map[String]int {
 	return m
 }
 
-// RandomStringCharset ...
 const RandomStringCharset = "abcdefghijklmnopqrstuvwxyz" +
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-// RandomStringseededRand ...
 var RandomStringseededRand *mrand.Rand = mrand.New(
 	mrand.NewSource(time.Now().UnixNano()))
 
-// StringWithCharset ...
 func StringWithCharset(length int, charset string) string {
 	b := make([]byte, length)
 	for i := range b {
@@ -2057,37 +1936,39 @@ func StringWithCharset(length int, charset string) string {
 	return string(b)
 }
 
-// RandomString ...
 func (s String) RandomString(length int) String {
 	return String(StringWithCharset(length, RandomStringCharset))
 }
-
 
 func (s String) pushTo(ss Strings) bool {
 	ss[len(ss)] = s
 	return true
 }
 
-// AddLeft ...
 func (s String) AddLeft(ss String) String {
 	return ss + s
 }
 
-// AddRight ...
 func (s String) AddRight(ss String) String {
 	return s + ss
 }
 
-// AddPos ...
 func (s String) AddPos(ss String, pos int) String {
 	return s.substr(0, pos) + ss + s.substr(pos, s.len()-pos)
 }
 
-// FindInFiles ...
 func (s String) FindInFiles(strpath String) Strings {
 	var ss Strings
 	//cout(strpath)
-	e := filepath.Walk(string(strpath), func(path string, info os.FileInfo, err error) error {
+	e := filepath.Walk("/home/k/go/src/String/FindInFilesTestFolder", func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
+			return err
+		}
+		//cout(path)
+		return nil
+	})
+	e = filepath.Walk(string(strpath), func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
 			return err
@@ -2101,26 +1982,27 @@ func (s String) FindInFiles(strpath String) Strings {
 		if err != nil {
 			//cout(err)
 			return nil
-		} 
-		//cout("tiefer")
-		defer file.Close()
-		//cout("tiefer2")
-		scanner := bufio.NewScanner(file)
-		scanner.Split(bufio.ScanLines)
-		// This is our buffer now
-		//cout("tiefer3")
-		i := 1
-		for scanner.Scan() {
-			var scannertext String = String(scanner.Text())
-			scannerarr := scannertext.FindAll(s)
-			ii := 0
-			scannerarrlen := len(scannerarr)
-			//cout(scannerarrlen)
-			for ii < scannerarrlen {
-				ss = append(ss, String(path+" - Line:"+strconv.Itoa(i)+" - Pos:"+strconv.Itoa(scannerarr[ii])))
-				ii++
+		} else {
+			//cout("tiefer")
+			defer file.Close()
+			//cout("tiefer2")
+			scanner := bufio.NewScanner(file)
+			scanner.Split(bufio.ScanLines)
+			// This is our buffer now
+			//cout("tiefer3")
+			i := 1
+			for scanner.Scan() {
+				var scannertext String = String(scanner.Text())
+				scannerarr := scannertext.FindAll(s)
+				ii := 0
+				scannerarrlen := len(scannerarr)
+				//cout(scannerarrlen)
+				for ii < scannerarrlen {
+					ss = append(ss, String(path+" - Line:"+strconv.Itoa(i)+" - Pos:"+strconv.Itoa(scannerarr[ii])))
+					ii++
+				}
+				i++
 			}
-			i++
 		}
 		return nil
 	})
@@ -2131,174 +2013,160 @@ func (s String) FindInFiles(strpath String) Strings {
 	return ss
 }
 
+/*
 // Starting Strings section
 func (s Strings) len() int {
-	return len(s)
+        return len(s)
 }
 
-// Filter ...
-func (s Strings) Filter(test func(String) bool) Strings {
-	var ret Strings
-	for _, ss := range s {
-		if test(ss) {
-			ret = append(ret, ss)
-		}
-	}
-	return ret
+func (arrs Strings) Filter(test func(String) bool) Strings {
+        var ret Strings
+        for _, s := range arrs {
+                if test(s) {
+                        ret = append(ret, s)
+                }
+        }
+        return ret
 }
 
-// substr ...
 func (s Strings) substr(start, end int) Strings {
-	for i := range s {
-		s[i] = s[i].substr(start, end)
-	}
-	return s
+        for i := range s {
+                s[i] = s[i].substr(start, end)
+        }
+        return s
 }
 
-// ASCIIsubstr ...
 func (s Strings) ASCIIsubstr(start, end int) Strings {
-	for i := range s {
-		s[i] = s[i].ASCIIsubstr(start, end)
-	}
-	return s
+        for i := range s {
+                s[i] = s[i].ASCIIsubstr(start, end)
+        }
+        return s
 }
 
-// Compare ...
 func (s Strings) Compare(ss Strings) bool {
-	b := reflect.DeepEqual(s, ss)
-	return b
+        b := reflect.DeepEqual(s, ss)
+        return b
 }
 
-// Contains ...
 func (s Strings) Contains(ss String) []bool {
-	var sss []bool
-	for _, val := range s {
-		ii := val.Contains(ss)
-		sss = append(sss, ii)
-	}
-	return sss
+        var sss []bool
+        for _, val := range s {
+                ii := val.Contains(ss)
+                sss = append(sss, ii)
+        }
+        return sss
 }
 
-// ContainsFilter ...
 func (s Strings) ContainsFilter(ss String) Strings {
-	var sss Strings
-	for _, val := range s {
-		if val.Contains(ss) {
-			sss = append(sss, val)
-		}
-	}
-	return sss
+        var sss Strings
+        for _, val := range s {
+                if val.Contains(ss) {
+                        sss = append(sss, val)
+                }
+        }
+        return sss
 }
 
-// ContainsAny ...
 func (s Strings) ContainsAny(chars String) []int {
-	var sss []int
-	for _, val := range s {
-		ii := val.ContainsAny(chars)
-		sss = append(sss, ii)
-	}
-	return sss
+        var sss []int
+        for _, val := range s {
+                ii := val.ContainsAny(chars)
+                sss = append(sss, ii)
+        }
+        return sss
 }
 
-// ContainsRune ...
 func (s Strings) ContainsRune(r rune) []bool {
-	var sss []bool
-	for _, val := range s {
-		ii := val.ContainsRune(r)
-		sss = append(sss, ii)
-	}
-	return sss
+        var sss []bool
+        for _, val := range s {
+                ii := val.ContainsRune(r)
+                sss = append(sss, ii)
+        }
+        return sss
 }
 
-// ContainsRuneFilter ...
 func (s Strings) ContainsRuneFilter(r rune) Strings {
-	var sss Strings
-	for _, val := range s {
-		if val.ContainsRune(r) {
-			sss = append(sss, val)
-		}
-	}
-	return sss
+        var sss Strings
+        for _, val := range s {
+                if val.ContainsRune(r) {
+                        sss = append(sss, val)
+                }
+        }
+        return sss
 }
 
-// Count ...
 func (s Strings) Count(substr String) []int {
-	var sss []int
-	for _, val := range s {
-		ii := val.Count(substr)
-		sss = append(sss, ii)
-	}
-	return sss
+        var sss []int
+        for _, val := range s {
+                ii := val.Count(substr)
+                sss = append(sss, ii)
+        }
+        return sss
 }
 
 /*func (s Strings) Fields() map[String]Strings {
-	sss := make(map[String]Strings)
-	for _, val := range s {
-		fields := val.Fields()
-		sss = append(sss,fields)
-	}
-	return sss
+        sss := make(map[String]Strings)
+        for _, val := range s {
+                fields := val.Fields()
+                sss = append(sss,fields)
+        }
+        return sss
 }*/
 
 /*func (s Strings) FieldsFunc(f func(rune) bool) map[String]Strings {
-	sss := make(map[String]Strings)
-	for _, val := range s {
-		fields := val.FieldsFunc(f)
-		sss = append(sss,fields)
-	}
-	return sss
+        sss := make(map[String]Strings)
+        for _, val := range s {
+                fields := val.FieldsFunc(f)
+                sss = append(sss,fields)
+        }
+        return sss
 }*/
-
-// HasPrefix ...
+/*
 func (s Strings) HasPrefix(ss String) []bool {
-	var sss []bool
-	for _, val := range s {
-		ii := val.HasPrefix(ss)
-		sss = append(sss, ii)
-	}
-	return sss
+        var sss []bool
+        for _, val := range s {
+                ii := val.HasPrefix(ss)
+                sss = append(sss, ii)
+        }
+        return sss
 }
 
-// HasPrefixFilter ...
 func (s Strings) HasPrefixFilter(ss String) Strings {
-	var sss Strings
-	for _, val := range s {
-		if val.HasPrefix(ss) {
-			sss = append(sss, val)
-		}
-	}
-	return sss
+        var sss Strings
+        for _, val := range s {
+                if val.HasPrefix(ss) {
+                        sss = append(sss, val)
+                }
+        }
+        return sss
 }
 
-// HasSuffix ...
 func (s Strings) HasSuffix(ss String) []bool {
-	var sss []bool
-	for _, val := range s {
-		ii := val.HasSuffix(ss)
-		sss = append(sss, ii)
-	}
-	return sss
+        var sss []bool
+        for _, val := range s {
+                ii := val.HasSuffix(ss)
+                sss = append(sss, ii)
+        }
+        return sss
 }
 
-// HasSuffixFilter ...
 func (s Strings) HasSuffixFilter(ss String) Strings {
-	var sss Strings
-	for _, val := range s {
-		if val.HasSuffix(ss) {
-			sss = append(sss, val)
-		}
-	}
-	return sss
+        var sss Strings
+        for _, val := range s {
+                if val.HasSuffix(ss) {
+                        sss = append(sss, val)
+                }
+        }
+        return sss
 }
 
-// Index ...
 func (s Strings) Index(ss String) []bool {
-	var sss []bool
-	for _, val := range s {
-		ii := val.HasSuffix(ss)
-		sss = append(sss, ii)
-	}
-	return sss
+        var sss []bool
+        for _, val := range s {
+                ii := val.HasSuffix(ss)
+                sss = append(sss, ii)
+        }
+        return sss
 }
 
 // Is EasyFormat easy regex alternative which hits in 98% of cases function like cCS d or {?}{c}{C}{S}{d}{d}-{d}{d}{d}
@@ -2355,7 +2223,7 @@ func (vs *ValSorter) Swap(i, j int) {
 // file get contents url and path
 // Find statt Index und FindALL => Array Find in Files
 // base 64 encode decode
-// POST String to address => POST Function optional headerobject
+// POST String to adress => POST Function optional headerobject
 // GET(paramname, url, optional headerobject)
 // fileputcontents
 // Execute() => in shell return []String rows
