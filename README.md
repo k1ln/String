@@ -67,7 +67,7 @@ var ss = s.Substr(3,5);
 Same as subtring but only for ASCII Strings => is much faster if you only use ASCII.
 
 ### **ParseDateLocal(format String,location String) time.Time**
-Date parsing in Golang is freaky. I didn't like it. So wrote it it works more like normally.
+Date parsing in Golang is freaky. I didn't like it. So rewrote it as one would expect it to work normally.
 
 Like this:
 ```
