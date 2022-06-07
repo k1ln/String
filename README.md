@@ -50,7 +50,9 @@ otherwise you have to write "String." in front of all declarations which is not 
 
 String (Big capital S) is of type string so you can do anything with it you can do with a string. + and [] work as expected. If you want to use it with other functions don't forget to change the variable type before with string() or s.Tostring().
 
-Functions which are not part of the main golang strings package but add to the functionality and comfort. Functions were only tested on Linux:
+Following additional functions are not part of the main golang strings package but add to the functionality and comfort you would expect in other languages. 
+
+These functions were only tested on Linux:
 
 ### **Substr(start, end int) String**
 A normal substring function utf-8 compatible. 
