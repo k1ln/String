@@ -1190,12 +1190,12 @@ func (s String) Get() String {
 	}
 	resp, err := client.Get(string(s))
 	if err != nil {
-		panic(err)
+		return String(err)
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		panic(err)
+		return String(err)
 	}
 	return String(body)
 }
@@ -1296,7 +1296,7 @@ func (s String) Post(url String, contenttype String) String {
 	}
 	resp, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		return String(err)
 	}
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
@@ -1369,7 +1369,7 @@ func (s String) Execute() (String, String) {
 		cmd.Stderr = &stderr
 		err := cmd.Run()
 		if err != nil {
-			panic(err)
+			return String(err)
 		}
 		return String(stdout.Bytes()[:len(stdout.Bytes())]).TrimRight("\n"), String(stderr.Bytes()[:len(stdout.Bytes())]).TrimRight("\n")
 	} else {
@@ -2168,82 +2168,3 @@ func (s Strings) Index(ss String) []bool {
         }
         return sss
 }
-
-// Is EasyFormat easy regex alternative which hits in 98% of cases function like cCS d or {?}{c}{C}{S}{d}{d}-{d}{d}{d}
-
-//Sorter needs to be much simpler
-/*package main
-
-import "fmt"
-import "sort"
-
-func main() {
-        m := map[string]int{
-                "One":   1,
-                "Two":   2,
-                "Three": 3,
-                "Ten":   10,
-                "Fifty": 50,
-        }
-        vs := NewValSorter(m)
-        fmt.Printf("%v\n", *vs)
-        vs.Sort()
-        fmt.Printf("%v\n", *vs)
-}
-
-type ValSorter struct {
-        Keys []string
-        Vals []int
-}
-
-func NewValSorter(m map[string]int) *ValSorter {
-        vs := &ValSorter{
-                Keys: make([]string, 0, len(m)),
-                Vals: make([]int, 0, len(m)),
-        }
-        for k, v := range m {
-                vs.Keys = append(vs.Keys, k)
-                vs.Vals = append(vs.Vals, v)
-        }
-        return vs
-}
-
-func (vs *ValSorter) Sort() {
-        sort.Sort(vs)
-}
-
-func (vs *ValSorter) Len() int           { return len(vs.Vals) }
-func (vs *ValSorter) Less(i, j int) bool { return vs.Vals[i] < vs.Vals[j] }
-func (vs *ValSorter) Swap(i, j int) {
-        vs.Vals[i], vs.Vals[j] = vs.Vals[j], vs.Vals[i]
-        vs.Keys[i], vs.Keys[j] = vs.Keys[j], vs.Keys[i]
-}*/
-
-// Crypto Library String sha128 usw. easy obfuscating like 3 + byte or -1 byte
-// file get contents url and path
-// Find statt Index und FindALL => Array Find in Files
-// base 64 encode decode
-// POST String to adress => POST Function optional headerobject
-// GET(paramname, url, optional headerobject)
-// fileputcontents
-// Execute() => in shell return []String rows
-// striptags
-// Perhaps not Publish(path, port, domain, opt ssl, opt ssl key, opt ssl ) on path and port => Server
-// .JSON => Parse to JSON array
-// Strings=>Array=>sort function
-// .countWords to array
-// .stripall but numbers and charatcers and -_
-// .strip(String[] to strip) or ReplaceAllArray
-// fileputContents newline every .2x. sep
-// RunIn() => Python, php, perl, c, c++, nodejs, => commands php() nodejs() perl() c() c++() python()
-// .Date => parse to date evtl. with format() => standard "YYYY-MM-DD"
-// .Int
-// .Double
-// Perhaps free Type-Cast possible?
-// .pushTo([]String)
-// Do all commands to all elements in array perhaps with condition
-
-//Strings Array Functions
-// DISTINCT
-// GROUPCOUNT
-// Filter
